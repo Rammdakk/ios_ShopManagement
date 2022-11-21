@@ -79,6 +79,7 @@
 		A86E4BE729100CFD00D925AC /* NewsFeed */ = {
 			isa = PBXGroup;
 			children = (
+				A86E4BF129100CFD00D925AC /* NewsViewController.swift */,
 				A86E4BE829100CFD00D925AC /* NewsFeedBusinessLogic.swift */,
 				A86E4BE929100CFD00D925AC /* NewsFeedAssembly.swift */,
 				A86E4BEA29100CFD00D925AC /* NewsFeedModel.swift */,
@@ -94,7 +95,6 @@
 		A87B445D291ECB9300584FA3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A86E4BF129100CFD00D925AC /* NewsViewController.swift */,
 				A8F0D4C22910041F00F300C2 /* LogInViewController.swift */,
 			);
 			path = ViewControllers;

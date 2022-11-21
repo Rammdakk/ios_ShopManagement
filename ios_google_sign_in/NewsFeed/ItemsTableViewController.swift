@@ -55,12 +55,13 @@ class ItemsTableViewController: UIViewController {
 
     private func setupNavbar() {
         navigationItem.title = "News List"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: UIImage(systemName: "chevron.left"),
-                style: .plain,
-                target: self,
-                action: #selector(goBack)
-        )
+        navigationItem.leftBarButtonItem = .none
+//        UIBarButtonItem(
+//                image: UIImage(systemName: "chevron.left"),
+//                style: .plain,
+//                target: self,
+//                action: #selector(goBack)
+//        )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "gobackward"),
                 style: .plain,
