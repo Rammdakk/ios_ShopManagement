@@ -92,12 +92,12 @@
 			path = NewsFeed;
 			sourceTree = "<group>";
 		};
-		A87B445D291ECB9300584FA3 /* ViewControllers */ = {
+		A87B445D291ECB9300584FA3 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
 				A8F0D4C22910041F00F300C2 /* LogInViewController.swift */,
 			);
-			path = ViewControllers;
+			path = LogIn;
 			sourceTree = "<group>";
 		};
 		A8FE820C2909BDF8004784A6 = {
@@ -112,7 +112,7 @@
 		A8FE82172909BDF8004784A6 /* ios_google_sign_in */ = {
 			isa = PBXGroup;
 			children = (
-				A87B445D291ECB9300584FA3 /* ViewControllers */,
+				A87B445D291ECB9300584FA3 /* LogIn */,
 				A8176A852913DB1100B84056 /* KeyChainSaving */,
 				A86E4BE729100CFD00D925AC /* NewsFeed */,
 				A8FE822F2909C2D4004784A6 /* GoogleService-Info.plist */,
