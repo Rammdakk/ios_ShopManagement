@@ -43,40 +43,40 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
                     self?.getNewsWithRefreshingTokens(requests, completion: completion)
                     return
                 }
-                print("check")
-                print(response)
                 completion(items)
             } else {
                 print("Could not get any content")
-                print(error)
+                print(error as Any)
             }
         }
 
         task.resume()
     }
 
-
-    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
+    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request,
+                                     completion: @escaping (Model.ItemsList) -> Void) {
         print("getNewsWithRefreshingTokens")
-        let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
+        var authentication = GIDSignIn.sharedInstance.currentUser?.authentication
         authentication?.do { auth, error in
             guard let accessToken = auth?.accessToken else {
                 return
             }
             let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
             let range = "A2:D100"
-            guard let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)") else {
+            guard let url =
+            URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
+            else {
                 return
             }
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-            let task = self.session.dataTask(with: request) { [weak self] data, response, error in
+            let task = self.session.dataTask(with: request) { [weak self] data, response, _ in
                 if
                         let data = data,
                         let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                    if ((response as? HTTPURLResponse)?.statusCode == 401) {
+                    if (response as? HTTPURLResponse)?.statusCode == 401 {
                     }
                     completion(items)
                 } else {

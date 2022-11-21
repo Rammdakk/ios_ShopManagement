@@ -16,26 +16,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                   willConnectTo session: UISceneSession,
                   options connectionOptions: UIScene.ConnectionOptions) {
            guard let windowScene = (scene as? UIWindowScene) else { return }
-        if (GIDSignIn.sharedInstance.hasPreviousSignIn()){
+        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
             GIDSignIn.sharedInstance.restorePreviousSignIn()
             let viewController = NewsFeedAssembly.build()
             let navigationController =
-            UINavigationController(rootViewController:
-                                    viewController)
+                    UINavigationController(rootViewController:
+                    viewController)
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = navigationController
             self.window = window
             window.makeKeyAndVisible()
-        } else
-           {
-               let navigationController =
-               UINavigationController(rootViewController:
+        } else {
+            let navigationController =
+                    UINavigationController(rootViewController:
                     LogInViewController())
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = navigationController
             self.window = window
             window.makeKeyAndVisible()
-           }
+        }
        }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -17,7 +17,7 @@ enum NewsFeedModel {
     struct ItemsList: Decodable {
         let values: [[String]]?
     }
-    
+
     struct Error: Decodable {
         let code: Int
         let message: String

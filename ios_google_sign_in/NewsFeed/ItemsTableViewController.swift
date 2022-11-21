@@ -21,7 +21,8 @@ class ItemsTableViewController: UIViewController {
 
     // MARK: - Internal vars
     private var interactor: NewsFeedBusinessLogic
-    private var tableView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var tableView: UICollectionView =
+            UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
     private var newsViewModels = [NewsViewModel]()
@@ -41,38 +42,20 @@ class ItemsTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        let flowLayout = UICollectionViewFlowLayout {
-//                   flowLayout?.itemSize = CGSize(width: self.tableView.bounds.width, height: 120)
-//               }()
-        isLoading = true
-        interactor.fetchNews(Model.GetNews.Request())
+        if GIDSignIn.sharedInstance.currentUser == nil {
+            GIDSignIn.sharedInstance.restorePreviousSignIn { [self] _, _ in
+                updateData()
+            }
+        } else {
+            updateData()
+        }
     }
 
     // MARK: - UI
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        setupNavbar()
         configureTableView()
-    }
-
-    private func setupNavbar() {
-        navigationItem.title = "News List"
-        navigationItem.leftBarButtonItem = .none
-//        UIBarButtonItem(
-//                image: UIImage(systemName: "chevron.left"),
-//                style: .plain,
-//                target: self,
-//                action: #selector(goBack)
-//        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(systemName: "gobackward"),
-                style: .plain,
-                target: self,
-                action: #selector(updateData)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = .label
-        navigationItem.leftBarButtonItem?.tintColor = .label
     }
 
     private func configureTableView() {
@@ -96,14 +79,13 @@ class ItemsTableViewController: UIViewController {
     private func setTableViewUI() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.pinLeft(to: view)
+        tableView.pinLeft(to: view, 16)
         tableView.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
-        tableView.pinRight(to: view)
+        tableView.pinRight(to: view, 16)
         tableView.pinBottom(to: view)
     }
 
     private func setTableViewCell() {
-
         tableView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseIdentifier)
     }
 
@@ -114,8 +96,8 @@ class ItemsTableViewController: UIViewController {
         }
     }
 
-    @objc
     private func loadDataFromSheets() {
+        isLoading = true
         interactor.fetchNews(Model.GetNews.Request())
     }
 
@@ -124,8 +106,6 @@ class ItemsTableViewController: UIViewController {
     @objc
     private func updateData() {
         refreshControl.endRefreshing()
-        isLoading = true
-        interactor.fetchNews(Model.GetNews.Request())
         loadDataFromSheets()
     }
 
@@ -139,7 +119,7 @@ class ItemsTableViewController: UIViewController {
 
 extension ItemsTableViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -150,10 +130,12 @@ extension ItemsTableViewController: UICollectionViewDataSource {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
+            -> UICollectionViewCell {
 
         let viewModel = newsViewModels[indexPath.row]
-        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell {
+        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseIdentifier, for: indexPath)
+                as? NewsCell {
             newsCell.configure(with: viewModel)
             return newsCell
         }
@@ -168,24 +150,16 @@ extension ItemsTableViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isLoading {
             let newsVC = NewsViewController()
-            newsVC.setData(vm: newsViewModels[indexPath.row])
+            newsVC.setData(viewModel: newsViewModels[indexPath.row])
             navigationController?.pushViewController(newsVC, animated: true)
         }
     }
-
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-//        if !isLoading {
-//            let newsVC = NewsViewController()
-//            newsVC.setData(vm: newsViewModels[indexPath.row])
-//            navigationController?.pushViewController(newsVC, animated: true)
-//        }
-//    }
 }
 
 extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = ((collectionViewLayout.collectionView?.frame.width ?? 200) - 20) / 2
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = ((collectionViewLayout.collectionView?.frame.width ?? 200) - 10) / 2
         let height = ((collectionViewLayout.collectionView?.frame.height ?? 400) - 20) / 2.3
         return CGSize(width: width, height: height)
     }

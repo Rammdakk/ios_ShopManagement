@@ -9,8 +9,8 @@ class NewsFeedAssembly {
         let presenter = NewsFeedPresenter()
         let worker = NewsFeedWorker()
         let interactor = NewsFeedInteractor(presenter: presenter, worker: worker)
-        let vc = ItemsTableViewController(interactor: interactor)
-        presenter.viewController = vc
-        return vc
+        let viewController = ItemsTableViewController(interactor: interactor)
+        presenter.viewController = viewController
+        return viewController
     }
 }

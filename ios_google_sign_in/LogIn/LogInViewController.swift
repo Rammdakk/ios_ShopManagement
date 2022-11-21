@@ -16,21 +16,7 @@ class LogInViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
-//            GIDSignIn.sharedInstance.restorePreviousSignIn()
-//            let viewController = NewsFeedAssembly.build()
-//            self.navigationController?.pushViewController(viewController, animated: true)
-//        }
         setupView()
-
-
-//        let result = KeychainHelper.standard.read(service: service,
-//                account: account,
-//                type: Auth.self)
-//        if result != nil {
-//            let viewController = NewsFeedAssembly.build()
-//            self.navigationController?.pushViewController(viewController, animated: true)
-//        }
     }
 
     static let sheetsReadScope = "https://www.googleapis.com/auth/spreadsheets"
@@ -50,15 +36,12 @@ class LogInViewController: UIViewController {
                 print(error)
                 return
             }
-            guard let accesToken = user?.authentication.accessToken,
+            guard let accessToken = user?.authentication.accessToken,
                   let refreshToken = user?.authentication.refreshToken
             else {
                 return
             }
-            print(clientID)
-            print(refreshToken)
-//            print(GIDSignIn.sharedInstance.restorePreviousSignIn())
-            let auth = Auth(accessToken: accesToken, refreshToken: refreshToken)
+            let auth = Auth(accessToken: accessToken, refreshToken: refreshToken)
             KeychainHelper.standard.save(auth, service: service, account: account)
             let viewController = NewsFeedAssembly.build()
             self.navigationController?.pushViewController(viewController, animated: true)

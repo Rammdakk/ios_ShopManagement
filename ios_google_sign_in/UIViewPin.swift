@@ -40,7 +40,7 @@ extension UIView {
         pinBottom(to: superView)
     }
 
-    func pinTopVal(to superView: UIView,     _ const: Double = 0) {
+    func pinTopVal(to superView: UIView, _ const: Double = 0) {
         translatesAutoresizingMaskIntoConstraints = false
         pinTop(to: superView, const)
         pinLeft(to: superView)

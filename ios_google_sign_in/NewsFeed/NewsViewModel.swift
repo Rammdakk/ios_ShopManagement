@@ -15,9 +15,9 @@ final class NewsViewModel {
         self.title = title
         self.checlLink = checlLink
         self.price = price
-        if let imageURL = URL(string: imageUrlPath){
+        if let imageURL = URL(string: imageUrlPath) {
             self.imageURL = imageURL
-        } else  {
+        } else {
             self.imageURL = URL(string: "https://www.short.ink/zv8gTW8R0eu")
         }
     }

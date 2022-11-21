@@ -24,10 +24,8 @@ extension NewsFeedPresenter: NewsFeedPresentationLogic {
 
         let data: [NewsViewModel]? = response.values.values?.map { (element: [String]) in
             NewsViewModel(title: element[0], checlLink: element[2], imageUrlPath: element[3], price: element[1])
-     
-            
-        }
 
+        }
         viewController?.displayData(data ?? [NewsViewModel]())
     }
 }
