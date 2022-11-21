@@ -31,10 +31,7 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
         else {
             return
         }
-        var accessToken = result.accessToken
-// swiftlint:disable all
-        accessToken = "ya29.a0AeTM1ifQEazfiEATVRFIZJ5DiTmF-2Qf5EDL8bVI6_2M8o8-4k603Tqk8ddvpyp5juLQ-HDdjQNJGruhC2QyDXBvWx_-gisLyBvhwMr22v8Fn9uMzaLsIT3S0MTpjfljCaUayApgPqVM-wQSiqYhjkC_4Fj2jgaCgYKAVMSAQ8SFQHWtWOmDZ69zel9-JyOpzyZZe2ncg0165"
-// swiftlint:enable all
+        let accessToken = result.accessToken
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         let task = session.dataTask(with: request) { [weak self] data, response, error in
@@ -60,12 +57,10 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
 
 
     func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
-        print("trying to refresh token")
+        print("getNewsWithRefreshingTokens")
         let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
         authentication?.do { auth, error in
             guard let accessToken = auth?.accessToken else {
-                print("error ac2")
-                print(error)
                 return
             }
             let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
@@ -75,30 +70,19 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
             }
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-            print("************")
-            print(request)
-            print(accessToken)
-            print("************")
             let task = self.session.dataTask(with: request) { [weak self] data, response, error in
                 if
                         let data = data,
-//                    let error = error as? NSError,
                         let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                    print("error.status")
-                    print(error)
-                    print(response)
                     if ((response as? HTTPURLResponse)?.statusCode == 401) {
                     }
-                    print(items)
                     completion(items)
                 } else {
                     print("Could not get any content")
-                    print(error)
                 }
             }
-
             task.resume()
         }
     }
@@ -115,7 +99,6 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
                 print("Could not load image")
             }
         }
-
         dataTask.resume()
     }
 

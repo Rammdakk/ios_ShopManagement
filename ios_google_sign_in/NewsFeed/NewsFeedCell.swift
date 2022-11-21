@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class NewsCell: UITableViewCell {
+final class NewsCell: UICollectionViewCell {
     static let reuseIdentifier = "NewsCell"
     private let newsImageView = UIImageView()
     private let newsTitleLabel = UILabel()
@@ -12,11 +12,11 @@ final class NewsCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupView()
     }
+
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -33,23 +33,24 @@ final class NewsCell: UITableViewCell {
         setupImageView()
         setupTitleLabel()
         setupDescriptionLabel()
+        contentView.backgroundColor = .secondarySystemBackground
+        contentView.layer.cornerRadius = 8
     }
-    
 
 
     private func setupImageView() {
         newsImageView.layer.cornerRadius = 8
         newsImageView.layer.cornerCurve = .continuous
         newsImageView.clipsToBounds = true
-        newsImageView.contentMode = .scaleAspectFill
+        newsImageView.contentMode = .scaleAspectFit
         newsImageView.backgroundColor = .secondarySystemBackground
         contentView.addSubview(newsImageView)
-        newsImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
+        newsImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         newsImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant:
-        16).isActive = true
-        newsImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:
-        -12).isActive = true
-        newsImageView.pinWidth(to: newsImageView.heightAnchor)
+        5).isActive = true
+        newsImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:
+        -5).isActive = true
+        newsImageView.pinHeight(to: contentView.widthAnchor)
     }
 
     private func setupTitleLabel() {
@@ -62,9 +63,12 @@ final class NewsCell: UITableViewCell {
         newsTitleLabel.font.lineHeight).isActive = true
         newsTitleLabel.leadingAnchor.constraint(equalTo: newsImageView.trailingAnchor, constant:
         12).isActive = true
-        newsTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
-        newsTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:
-        -12).isActive = true
+        newsTitleLabel.topAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: 12).isActive = true
+        newsTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant:
+        5).isActive = true
+        newsTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:
+        -5).isActive = true
+
     }
 
     private func setupDescriptionLabel() {
@@ -76,11 +80,13 @@ final class NewsCell: UITableViewCell {
         newsDescriptionLabel.leadingAnchor.constraint(equalTo: newsImageView.trailingAnchor,
                 constant: 12).isActive = true
         newsDescriptionLabel.topAnchor.constraint(equalTo: newsTitleLabel.bottomAnchor, constant:
-        12).isActive = true
-        newsDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                constant: -16).isActive = true
-        newsDescriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor,
-                constant: -12).isActive = true
+        4).isActive = true
+        newsDescriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant:
+        5).isActive = true
+        newsDescriptionLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:
+        -5).isActive = true
+        newsDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:
+        -16).isActive = true
     }
 
     func configure(with news: NewsViewModel) {
