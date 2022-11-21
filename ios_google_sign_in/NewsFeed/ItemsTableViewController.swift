@@ -114,16 +114,17 @@ class ItemsTableViewController: UIViewController {
 
     @objc
     private func loadDataFromSheets() {
-        let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
-        let range = "A2:C2"
-        guard let accessToken = GIDSignIn.sharedInstance.currentUser?.authentication.accessToken else {
-            return
-        }
-        print(accessToken)
-        let header: HTTPHeaders = ["Authorization": "Bearer \(accessToken)"]
-        let requestURL = "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)"
-        let req = AF.request(requestURL, method: .get, encoding: JSONEncoding.default, headers: header)
-        req.responseJSON { response in print(response.value) }
+//        let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
+//        let range = "A2:C2"
+//        guard let accessToken = GIDSignIn.sharedInstance.currentUser?.authentication.accessToken else {
+//            return
+//        }
+//        print(accessToken)
+//        let header: HTTPHeaders = ["Authorization": "Bearer \(accessToken)"]
+//        let requestURL = "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)"
+//        let req = AF.request(requestURL, method: .get, encoding: JSONEncoding.default, headers: header)
+//        req.responseJSON { response in print(response.value) }
+        interactor.fetchNews(Model.GetNews.Request())
     }
 
     // MARK: - Button action
