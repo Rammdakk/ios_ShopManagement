@@ -23,6 +23,7 @@ class ItemsTableViewController: UIViewController {
     private var interactor: NewsFeedBusinessLogic
     private var tableView: UICollectionView =
             UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let searchController = UISearchController(searchResultsController: nil)
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
     private var newsViewModels = [NewsViewModel]()
@@ -56,6 +57,15 @@ class ItemsTableViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         configureTableView()
+        setUpSearch()
+    }
+
+    private func setUpSearch() {
+        view.addSubview(searchController.searchBar)
+//        searchController.searchBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 10)
+        searchController.searchBar.pinBottom(to: tableView.topAnchor, 10)
+        searchController.searchBar.pinLeft(to: view, 8)
+        searchController.searchBar.pinRight(to: view, 40)
     }
 
     private func configureTableView() {
@@ -79,9 +89,9 @@ class ItemsTableViewController: UIViewController {
     private func setTableViewUI() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.pinLeft(to: view, 16)
-        tableView.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
-        tableView.pinRight(to: view, 16)
+        tableView.pinLeft(to: view, 8)
+        tableView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 140)
+        tableView.pinRight(to: view, 8)
         tableView.pinBottom(to: view)
     }
 
@@ -160,7 +170,7 @@ extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = ((collectionViewLayout.collectionView?.frame.width ?? 200) - 10) / 2
-        let height = ((collectionViewLayout.collectionView?.frame.height ?? 400) - 20) / 2.3
+        let height = ((collectionViewLayout.collectionView?.frame.height ?? 400) - 20) / 1.9
         return CGSize(width: width, height: height)
     }
 }

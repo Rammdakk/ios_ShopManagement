@@ -23,9 +23,6 @@ class LogInViewController: UIViewController {
 
     @objc
     private func googleSetUp() {
-        guard let clientApiKey = FirebaseApp.app()?.options.apiKey else {
-            return
-        }
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             return
         }

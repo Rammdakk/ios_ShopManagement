@@ -56,13 +56,13 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
     func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request,
                                      completion: @escaping (Model.ItemsList) -> Void) {
         print("getNewsWithRefreshingTokens")
-        var authentication = GIDSignIn.sharedInstance.currentUser?.authentication
-        authentication?.do { auth, error in
+        let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
+        authentication?.do { auth, _ in
             guard let accessToken = auth?.accessToken else {
                 return
             }
             let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
-            let range = "A2:D100"
+            let range = "A2:E100"
             guard let url =
             URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
             else {
