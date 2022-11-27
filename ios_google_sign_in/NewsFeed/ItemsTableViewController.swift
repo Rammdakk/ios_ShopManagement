@@ -7,8 +7,6 @@
 
 import UIKit
 import GoogleSignIn
-import Firebase
-import Alamofire
 
 protocol NewsFeedDisplayLogic: AnyObject {
     typealias Model = NewsFeedModel
@@ -43,13 +41,7 @@ class ItemsTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        if GIDSignIn.sharedInstance.currentUser == nil {
-            GIDSignIn.sharedInstance.restorePreviousSignIn { [self] _, _ in
-                updateData()
-            }
-        } else {
-            updateData()
-        }
+        updateData()
     }
 
     // MARK: - UI

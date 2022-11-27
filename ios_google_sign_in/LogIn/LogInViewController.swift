@@ -7,8 +7,8 @@
 
 import UIKit
 import GoogleSignIn
-import Firebase
-import Alamofire
+
+let clientID: String = "966039622219-bqb5ebkp5stl4bqte6npvrg594c81viq.apps.googleusercontent.com"
 
 class LogInViewController: UIViewController {
 
@@ -23,9 +23,6 @@ class LogInViewController: UIViewController {
 
     @objc
     private func googleSetUp() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else {
-            return
-        }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.signIn(with: config, presenting: self, hint: "",
                 additionalScopes: [LogInViewController.sheetsReadScope]) { user, error in
