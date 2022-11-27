@@ -8,6 +8,7 @@ import GoogleSignIn
 protocol NewsFeedWorkerLogic {
     typealias Model = NewsFeedModel
     func getNews(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
+    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
 }
 
@@ -23,75 +24,67 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+
         guard let result = KeychainHelper.standard.read(service: service,
-                                                  account: account,
-                                                        type: Auth.self) else {
+                account: account,
+                type: Auth.self)
+        else {
             return
         }
         let accessToken = result.accessToken
-        print(accessToken)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         let task = session.dataTask(with: request) { [weak self] data, response, error in
             if
                     let data = data,
-//                    let error = error as? NSError,
                     let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                print("error.status")
-                print(error)
-                if ((response as? HTTPURLResponse)?.statusCode == 401) {
+                if (response as? HTTPURLResponse)?.statusCode == 401 {
                     print("401")
                     self?.getNewsWithRefreshingTokens(requests, completion: completion)
                     return
                 }
-                print("check")
-                print(items)
                 completion(items)
             } else {
                 print("Could not get any content")
-                print(error)
+                print(error as Any)
             }
         }
 
         task.resume()
     }
-    
-    
-    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
-        print("trying to refresh token")
-        guard let url = URL(string: "https://accounts.google.com/o/oauth2/token") else {
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        guard let result = KeychainHelper.standard.read(service: service,
-                                                  account: account,
-                                                        type: Auth.self) else {
-            return
-        }
-        let accessToken = result.accessToken
-        print(accessToken)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        let task = session.dataTask(with: request) { [weak self] data, response, error in
-            if
-                    let data = data,
-//                    let error = error as? NSError,
-                    let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                print("error.status")
-                print(error)
-                if ((response as? HTTPURLResponse)?.statusCode == 401) {
-                    
-                }
-                print(items)
-                completion(items)
-            } else {
-                print("Could not get any content")
-                print(error)
-            }
-        }
 
-        task.resume()
+    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request,
+                                     completion: @escaping (Model.ItemsList) -> Void) {
+        print("getNewsWithRefreshingTokens")
+        let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
+        authentication?.do { auth, _ in
+            guard let accessToken = auth?.accessToken else {
+                return
+            }
+            let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
+            let range = "A2:E100"
+            guard let url =
+            URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
+            else {
+                return
+            }
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            let task = self.session.dataTask(with: request) { [weak self] data, response, _ in
+                if
+                        let data = data,
+                        let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
+                    if (response as? HTTPURLResponse)?.statusCode == 401 {
+                    }
+                    completion(items)
+                } else {
+                    print("Could not get any content")
+                }
+            }
+            task.resume()
+        }
     }
 
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void) {
@@ -106,7 +99,6 @@ class NewsFeedWorker: NewsFeedWorkerLogic {
                 print("Could not load image")
             }
         }
-
         dataTask.resume()
     }
 

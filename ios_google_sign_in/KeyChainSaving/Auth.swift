@@ -8,7 +8,7 @@
 let account = "ios_google_sign_in_app.com"
 let service = "token"
 
-struct Auth:Codable {
+struct Auth: Codable {
     let accessToken: String
-    let refreshToken:String
+    let refreshToken: String
 }

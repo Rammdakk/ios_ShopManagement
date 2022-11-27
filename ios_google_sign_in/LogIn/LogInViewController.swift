@@ -7,8 +7,8 @@
 
 import UIKit
 import GoogleSignIn
-import Firebase
-import Alamofire
+
+let clientID: String = "966039622219-bqb5ebkp5stl4bqte6npvrg594c81viq.apps.googleusercontent.com"
 
 class LogInViewController: UIViewController {
 
@@ -16,41 +16,26 @@ class LogInViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if GIDSignIn.sharedInstance.restorePreviousSignIn != nil {
-            let viewController = NewsFeedAssembly.build()
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
         setupView()
-        
-        
-        let result = KeychainHelper.standard.read(service: service,
-                                                  account: account,
-                                                  type: Auth.self)
-        if result != nil {
-            let viewController = NewsFeedAssembly.build()
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
     }
 
     static let sheetsReadScope = "https://www.googleapis.com/auth/spreadsheets"
 
     @objc
     private func googleSetUp() {
-        guard let clientApiKey = FirebaseApp.app()?.options.apiKey else { return }
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.signIn(with: config, presenting: self, hint: "",
-                                        additionalScopes: [LogInViewController.sheetsReadScope]) {user, error in
+                additionalScopes: [LogInViewController.sheetsReadScope]) { user, error in
             if let error = error {
                 print(error)
                 return
             }
-            guard let accesToken = user?.authentication.accessToken,
-                    let refreshToken = user?.authentication.refreshToken
+            guard let accessToken = user?.authentication.accessToken,
+                  let refreshToken = user?.authentication.refreshToken
             else {
                 return
             }
-            let auth = Auth(accessToken: accesToken, refreshToken: refreshToken)
+            let auth = Auth(accessToken: accessToken, refreshToken: refreshToken)
             KeychainHelper.standard.save(auth, service: service, account: account)
             let viewController = NewsFeedAssembly.build()
             self.navigationController?.pushViewController(viewController, animated: true)
@@ -69,6 +54,6 @@ class LogInViewController: UIViewController {
         incrementButton.pinBottom(to: view.centerYAnchor, -120)
         incrementButton.pin(to: view, [.left: 24, .right: 24])
         incrementButton.addTarget(self, action:
-                                    #selector(googleSetUp), for: .touchUpInside)
+        #selector(googleSetUp), for: .touchUpInside)
     }
 }

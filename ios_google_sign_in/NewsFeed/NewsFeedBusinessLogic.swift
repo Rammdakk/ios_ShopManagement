@@ -31,7 +31,10 @@ class NewsFeedInteractor {
 
 extension NewsFeedInteractor: NewsFeedBusinessLogic {
     func fetchNews(_ request: Model.GetNews.Request) {
-        worker.getNews(request) { [weak self] result in
+//        worker.getNews(request) { [weak self] result in
+//            self?.presenter.presentData(Model.GetNews.Response(values: result))
+//        }
+        worker.getNewsWithRefreshingTokens(request) { [weak self] result in
             self?.presenter.presentData(Model.GetNews.Response(values: result))
         }
     }

@@ -14,10 +14,10 @@ final class NewsViewController: UIViewController {
         setupUI()
     }
 
-    func setData(vm: NewsViewModel) {
-        titleLabel.text = vm.title
-        descriptionLabel.text = vm.checlLink
-        if let data = vm.imageData {
+    func setData(viewModel: NewsViewModel) {
+        titleLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.checlLink
+        if let data = viewModel.imageData {
             imageView.image = UIImage(data: data)
         }
     }
@@ -33,7 +33,6 @@ final class NewsViewController: UIViewController {
     }
 
     private func setupNavbar() {
-        navigationItem.title = "News"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "chevron.left"),
                 style: .plain,
@@ -46,7 +45,7 @@ final class NewsViewController: UIViewController {
     private func setImageView() {
         //  imageView.image = UIImage(named: "landscape")
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         imageView.pin(to: view, [.left: 0, .right: 0])
         imageView.pinTop(to: view.safeAreaLayoutGuide.topAnchor)

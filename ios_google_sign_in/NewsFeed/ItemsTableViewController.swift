@@ -7,8 +7,6 @@
 
 import UIKit
 import GoogleSignIn
-import Firebase
-import Alamofire
 
 protocol NewsFeedDisplayLogic: AnyObject {
     typealias Model = NewsFeedModel
@@ -21,7 +19,9 @@ class ItemsTableViewController: UIViewController {
 
     // MARK: - Internal vars
     private var interactor: NewsFeedBusinessLogic
-    private var tableView = UITableView(frame: .zero, style: .plain)
+    private var tableView: UICollectionView =
+            UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let searchController = UISearchController(searchResultsController: nil)
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
     private var newsViewModels = [NewsViewModel]()
@@ -41,34 +41,23 @@ class ItemsTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        isLoading = true
-        interactor.fetchNews(Model.GetNews.Request())
+        updateData()
     }
 
     // MARK: - UI
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        setupNavbar()
         configureTableView()
+        setUpSearch()
     }
 
-    private func setupNavbar() {
-        navigationItem.title = "News List"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: UIImage(systemName: "chevron.left"),
-                style: .plain,
-                target: self,
-                action: #selector(goBack)
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(systemName: "gobackward"),
-                style: .plain,
-                target: self,
-                action: #selector(updateData)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = .label
-        navigationItem.leftBarButtonItem?.tintColor = .label
+    private func setUpSearch() {
+        view.addSubview(searchController.searchBar)
+//        searchController.searchBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 10)
+        searchController.searchBar.pinBottom(to: tableView.topAnchor, 10)
+        searchController.searchBar.pinLeft(to: view, 8)
+        searchController.searchBar.pinRight(to: view, 40)
     }
 
     private func configureTableView() {
@@ -92,16 +81,14 @@ class ItemsTableViewController: UIViewController {
     private func setTableViewUI() {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        tableView.rowHeight = 120
-        tableView.pinLeft(to: view)
-        tableView.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
-        tableView.pinRight(to: view)
+        tableView.pinLeft(to: view, 8)
+        tableView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 140)
+        tableView.pinRight(to: view, 8)
         tableView.pinBottom(to: view)
     }
 
     private func setTableViewCell() {
-        tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.reuseIdentifier)
+        tableView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseIdentifier)
     }
 
     private func reloadData() {
@@ -111,18 +98,9 @@ class ItemsTableViewController: UIViewController {
         }
     }
 
-    @objc
     private func loadDataFromSheets() {
-        let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
-        let range = "A2:C2"
-        guard let accessToken = GIDSignIn.sharedInstance.currentUser?.authentication.accessToken else {
-            return
-        }
-        print(accessToken)
-        let header: HTTPHeaders = ["Authorization": "Bearer \(accessToken)"]
-        let requestURL = "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)"
-        let req = AF.request(requestURL, method: .get, encoding: JSONEncoding.default, headers: header)
-        req.responseJSON { response in print(response.value) }
+        isLoading = true
+        interactor.fetchNews(Model.GetNews.Request())
     }
 
     // MARK: - Button action
@@ -130,8 +108,6 @@ class ItemsTableViewController: UIViewController {
     @objc
     private func updateData() {
         refreshControl.endRefreshing()
-        isLoading = true
-        interactor.fetchNews(Model.GetNews.Request())
         loadDataFromSheets()
     }
 
@@ -141,10 +117,14 @@ class ItemsTableViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UICollectionViewDataSource
 
-extension ItemsTableViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ItemsTableViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isLoading {
             return 0
         } else {
@@ -152,29 +132,38 @@ extension ItemsTableViewController: UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isLoading {
-        } else {
-            let viewModel = newsViewModels[indexPath.row]
-            if let newsCell = tableView.dequeueReusableCell(withIdentifier:
-            NewsCell.reuseIdentifier, for: indexPath) as? NewsCell {
-                newsCell.configure(with: viewModel)
-                return newsCell
-            }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
+            -> UICollectionViewCell {
+
+        let viewModel = newsViewModels[indexPath.row]
+        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseIdentifier, for: indexPath)
+                as? NewsCell {
+            newsCell.configure(with: viewModel)
+            return newsCell
         }
-        return UITableViewCell()
+
+        return UICollectionViewCell()
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - UICollectionViewDelegate
 
-extension ItemsTableViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension ItemsTableViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isLoading {
             let newsVC = NewsViewController()
-            newsVC.setData(vm: newsViewModels[indexPath.row])
+            newsVC.setData(viewModel: newsViewModels[indexPath.row])
             navigationController?.pushViewController(newsVC, animated: true)
         }
+    }
+}
+
+extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = ((collectionViewLayout.collectionView?.frame.width ?? 200) - 10) / 2
+        let height = ((collectionViewLayout.collectionView?.frame.height ?? 400) - 20) / 1.9
+        return CGSize(width: width, height: height)
     }
 }
 
