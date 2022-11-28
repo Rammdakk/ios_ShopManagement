@@ -60,6 +60,12 @@ class ProductListViewController: UIViewController {
         searchBar.pinBottom(to: tableView.topAnchor, 10)
         searchBar.pinLeft(to: view, 8)
         searchBar.pinRight(to: view, 40)
+        searchBar.enablesReturnKeyAutomatically = false
+    }
+
+    @objc
+    func dismiss(gesture: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 
     private func configureTableView() {
@@ -181,7 +187,11 @@ extension ProductListViewController: UISearchBarDelegate {
                 return tmp.lowercased().contains(searchText.lowercased())
             })
         }
-        self.reloadData()
+        reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
