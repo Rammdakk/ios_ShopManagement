@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E126B2E218FB5DAA5A6B0DD /* UIView_Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E126E1F18E40347006B27AD /* UIView_Ext.swift */; };
 		A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A862913DB3800B84056 /* KeychainHelper.swift */; };
 		A8176A892913DDEA00B84056 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A882913DDEA00B84056 /* Auth.swift */; };
 		A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */; };
@@ -30,7 +29,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2E126E1F18E40347006B27AD /* UIView_Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIView_Ext.swift; path = Extensions/UIView_Ext.swift; sourceTree = "<group>"; };
 		A8176A862913DB3800B84056 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		A8176A882913DDEA00B84056 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListBusinessLogic.swift; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				A8FE82212909BDF9004784A6 /* Assets.xcassets */,
 				A8FE82232909BDF9004784A6 /* LaunchScreen.storyboard */,
 				A8FE82262909BDF9004784A6 /* Info.plist */,
-				2E126E1F18E40347006B27AD /* UIView_Ext.swift */,
 			);
 			path = ios_google_sign_in;
 			sourceTree = "<group>";
@@ -245,7 +242,6 @@
 				A86E4BF829100CFD00D925AC /* ProductListWorker.swift in Sources */,
 				A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */,
 				A8FE821B2909BDF8004784A6 /* SceneDelegate.swift in Sources */,
-				2E126B2E218FB5DAA5A6B0DD /* UIView_Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
