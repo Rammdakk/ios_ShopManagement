@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class NewsViewModel {
+final class ProductViewMode {
     let title: String
     let description: String
     let checlLink: String

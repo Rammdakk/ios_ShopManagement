@@ -7,19 +7,19 @@
 
 import UIKit
 
-protocol NewsFeedBusinessLogic {
-    typealias Model = NewsFeedModel
+protocol ProductListBusinessLogic {
+    typealias Model = ProductListResponceModel
     func fetchNews(_ request: Model.GetNews.Request)
 }
 
-class NewsFeedInteractor {
+class ProductListInteractor {
     // MARK: - External vars
-    private let presenter: NewsFeedPresentationLogic
-    private let worker: NewsFeedWorkerLogic
+    private let presenter: ProductListPresentationLogic
+    private let worker: ProductListWorkerLogic
 
     init(
-            presenter: NewsFeedPresentationLogic,
-            worker: NewsFeedWorkerLogic
+            presenter: ProductListPresentationLogic,
+            worker: ProductListWorkerLogic
     ) {
         self.presenter = presenter
         self.worker = worker
@@ -29,7 +29,7 @@ class NewsFeedInteractor {
 
 // MARK: - Business logic
 
-extension NewsFeedInteractor: NewsFeedBusinessLogic {
+extension ProductListInteractor: ProductListBusinessLogic {
     func fetchNews(_ request: Model.GetNews.Request) {
 //        worker.getNews(request) { [weak self] result in
 //            self?.presenter.presentData(Model.GetNews.Response(values: result))

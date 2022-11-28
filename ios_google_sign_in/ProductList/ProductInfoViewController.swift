@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class NewsViewController: UIViewController {
+final class ProductInfoViewController: UIViewController {
     private var imageView = UIImageView()
     private var titleLabel = UILabel()
 //    private var descriptionLabel = UILabel()
@@ -15,7 +15,7 @@ final class NewsViewController: UIViewController {
         setupUI()
     }
 
-    func setData(viewModel: NewsViewModel) {
+    func setData(viewModel: ProductViewMode) {
         titleLabel.text = viewModel.title
         descriptionLabel.dataDetectorTypes = .link
         let attributedString = NSMutableAttributedString(string: "Чек")

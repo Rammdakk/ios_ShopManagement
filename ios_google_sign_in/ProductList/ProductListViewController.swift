@@ -8,28 +8,28 @@
 import UIKit
 import GoogleSignIn
 
-protocol NewsFeedDisplayLogic: AnyObject {
-    typealias Model = NewsFeedModel
-    func displayData(_ viewModel: [NewsViewModel])
+protocol ProductListDisplayLogic: AnyObject {
+    typealias Model = ProductListResponceModel
+    func displayData(_ viewModel: [ProductViewMode])
 }
 
-class ItemsTableViewController: UIViewController {
+class ProductListViewController: UIViewController {
 
     // MARK: - External vars
 
     // MARK: - Internal vars
-    private var interactor: NewsFeedBusinessLogic
+    private var interactor: ProductListBusinessLogic
     private var tableView: UICollectionView =
             UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
-    private var newsViewModels = [NewsViewModel]()
-    private var filteredItems = [NewsViewModel]()
+    private var newsViewModels = [ProductViewMode]()
+    private var filteredItems = [ProductViewMode]()
 
     // MARK: - Lifecycle
 
-    init(interactor: NewsFeedBusinessLogic) {
+    init(interactor: ProductListBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -90,7 +90,7 @@ class ItemsTableViewController: UIViewController {
     }
 
     private func setTableViewCell() {
-        tableView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseIdentifier)
+        tableView.register(ProductListCell.self, forCellWithReuseIdentifier: ProductListCell.reuseIdentifier)
     }
 
     private func reloadData() {
@@ -121,7 +121,7 @@ class ItemsTableViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension ItemsTableViewController: UICollectionViewDataSource {
+extension ProductListViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
@@ -138,8 +138,8 @@ extension ItemsTableViewController: UICollectionViewDataSource {
             -> UICollectionViewCell {
 
         let viewModel = newsViewModels[indexPath.row]
-        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseIdentifier, for: indexPath)
-                as? NewsCell {
+        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier, for: indexPath)
+                as? ProductListCell {
             newsCell.configure(with: viewModel)
             return newsCell
         }
@@ -150,17 +150,17 @@ extension ItemsTableViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension ItemsTableViewController: UICollectionViewDelegate {
+extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isLoading {
-            let newsVC = NewsViewController()
+            let newsVC = ProductInfoViewController()
             newsVC.setData(viewModel: filteredItems[indexPath.row])
             navigationController?.pushViewController(newsVC, animated: true)
         }
     }
 }
 
-extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
+extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = ((collectionViewLayout.collectionView?.frame.width ?? 200) - 10) / 2
@@ -171,7 +171,7 @@ extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - SearchBarDelegate
 
-extension ItemsTableViewController: UISearchBarDelegate {
+extension ProductListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             filteredItems = newsViewModels
@@ -187,8 +187,8 @@ extension ItemsTableViewController: UISearchBarDelegate {
 
 // MARK: - Display Logic
 
-extension ItemsTableViewController: NewsFeedDisplayLogic {
-    func displayData(_ viewModel: [NewsViewModel]) {
+extension ProductListViewController: ProductListDisplayLogic {
+    func displayData(_ viewModel: [ProductViewMode]) {
         newsViewModels = viewModel
         filteredItems = newsViewModels
         reloadData()

@@ -5,14 +5,14 @@
 import UIKit
 import GoogleSignIn
 
-protocol NewsFeedWorkerLogic {
-    typealias Model = NewsFeedModel
+protocol ProductListWorkerLogic {
+    typealias Model = ProductListResponceModel
     func getNews(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
     func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
 }
 
-class NewsFeedWorker: NewsFeedWorkerLogic {
+class ProductListWorker: ProductListWorkerLogic {
     private let decoder: JSONDecoder = JSONDecoder()
     private let session: URLSession = URLSession.shared
 

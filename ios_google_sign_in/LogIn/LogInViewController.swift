@@ -37,7 +37,7 @@ class LogInViewController: UIViewController {
             }
             let auth = Auth(accessToken: accessToken, refreshToken: refreshToken)
             KeychainHelper.standard.save(auth, service: service, account: account)
-            let viewController = NewsFeedAssembly.build()
+            let viewController = ProductListAssembly.build()
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }

@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class NewsCell: UICollectionViewCell {
+final class ProductListCell: UICollectionViewCell {
     static let reuseIdentifier = "NewsCell"
     private let newsImageView = UIImageView()
     private let newsTitleLabel = UILabel()
@@ -17,7 +17,6 @@ final class NewsCell: UICollectionViewCell {
         super.init(frame: frame)
         setupView()
     }
-
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -92,7 +91,7 @@ final class NewsCell: UICollectionViewCell {
         -8).isActive = true
     }
 
-    func configure(with news: NewsViewModel) {
+    func configure(with news: ProductViewMode) {
         newsTitleLabel.text = news.title + "\n"
         newsDescriptionLabel.text = news.description.replacingOccurrences(of: "\n", with: " ")
         priceLabel.text = "$" + news.price
@@ -101,7 +100,7 @@ final class NewsCell: UICollectionViewCell {
         }
     }
 
-    func setImage(from url: URL, news: NewsViewModel) {
+    func setImage(from url: URL, news: ProductViewMode) {
         print(url)
         if let data = news.imageData {
             DispatchQueue.main.async {

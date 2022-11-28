@@ -9,15 +9,15 @@
 /* Begin PBXBuildFile section */
 		A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A862913DB3800B84056 /* KeychainHelper.swift */; };
 		A8176A892913DDEA00B84056 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A882913DDEA00B84056 /* Auth.swift */; };
-		A86E4BF229100CFD00D925AC /* NewsFeedBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE829100CFD00D925AC /* NewsFeedBusinessLogic.swift */; };
-		A86E4BF329100CFD00D925AC /* NewsFeedAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE929100CFD00D925AC /* NewsFeedAssembly.swift */; };
-		A86E4BF429100CFD00D925AC /* NewsFeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEA29100CFD00D925AC /* NewsFeedModel.swift */; };
-		A86E4BF629100CFD00D925AC /* NewsFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEC29100CFD00D925AC /* NewsFeedCell.swift */; };
-		A86E4BF729100CFD00D925AC /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BED29100CFD00D925AC /* NewsViewModel.swift */; };
-		A86E4BF829100CFD00D925AC /* NewsFeedWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEE29100CFD00D925AC /* NewsFeedWorker.swift */; };
-		A86E4BF929100CFD00D925AC /* NewsFeedPresentationLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEF29100CFD00D925AC /* NewsFeedPresentationLogic.swift */; };
-		A86E4BFA29100CFD00D925AC /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BF129100CFD00D925AC /* NewsViewController.swift */; };
-		A87B445F291ED0F300584FA3 /* ItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87B445E291ED0F300584FA3 /* ItemsTableViewController.swift */; };
+		A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */; };
+		A86E4BF329100CFD00D925AC /* ProductListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE929100CFD00D925AC /* ProductListAssembly.swift */; };
+		A86E4BF429100CFD00D925AC /* ProductListResponceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEA29100CFD00D925AC /* ProductListResponceModel.swift */; };
+		A86E4BF629100CFD00D925AC /* ProductListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEC29100CFD00D925AC /* ProductListCell.swift */; };
+		A86E4BF729100CFD00D925AC /* ProductViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BED29100CFD00D925AC /* ProductViewMode.swift */; };
+		A86E4BF829100CFD00D925AC /* ProductListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEE29100CFD00D925AC /* ProductListWorker.swift */; };
+		A86E4BF929100CFD00D925AC /* ProductListPresentationLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEF29100CFD00D925AC /* ProductListPresentationLogic.swift */; };
+		A86E4BFA29100CFD00D925AC /* ProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BF129100CFD00D925AC /* ProductInfoViewController.swift */; };
+		A87B445F291ED0F300584FA3 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87B445E291ED0F300584FA3 /* ProductListViewController.swift */; };
 		A8F0D4C32910041F00F300C2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F0D4C22910041F00F300C2 /* LogInViewController.swift */; };
 		A8FE82192909BDF8004784A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE82182909BDF8004784A6 /* AppDelegate.swift */; };
 		A8FE821B2909BDF8004784A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE821A2909BDF8004784A6 /* SceneDelegate.swift */; };
@@ -31,15 +31,15 @@
 /* Begin PBXFileReference section */
 		A8176A862913DB3800B84056 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		A8176A882913DDEA00B84056 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
-		A86E4BE829100CFD00D925AC /* NewsFeedBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedBusinessLogic.swift; sourceTree = "<group>"; };
-		A86E4BE929100CFD00D925AC /* NewsFeedAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedAssembly.swift; sourceTree = "<group>"; };
-		A86E4BEA29100CFD00D925AC /* NewsFeedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedModel.swift; sourceTree = "<group>"; };
-		A86E4BEC29100CFD00D925AC /* NewsFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedCell.swift; sourceTree = "<group>"; };
-		A86E4BED29100CFD00D925AC /* NewsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
-		A86E4BEE29100CFD00D925AC /* NewsFeedWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedWorker.swift; sourceTree = "<group>"; };
-		A86E4BEF29100CFD00D925AC /* NewsFeedPresentationLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedPresentationLogic.swift; sourceTree = "<group>"; };
-		A86E4BF129100CFD00D925AC /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
-		A87B445E291ED0F300584FA3 /* ItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsTableViewController.swift; sourceTree = "<group>"; };
+		A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListBusinessLogic.swift; sourceTree = "<group>"; };
+		A86E4BE929100CFD00D925AC /* ProductListAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListAssembly.swift; sourceTree = "<group>"; };
+		A86E4BEA29100CFD00D925AC /* ProductListResponceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListResponceModel.swift; sourceTree = "<group>"; };
+		A86E4BEC29100CFD00D925AC /* ProductListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListCell.swift; sourceTree = "<group>"; };
+		A86E4BED29100CFD00D925AC /* ProductViewMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewMode.swift; sourceTree = "<group>"; };
+		A86E4BEE29100CFD00D925AC /* ProductListWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListWorker.swift; sourceTree = "<group>"; };
+		A86E4BEF29100CFD00D925AC /* ProductListPresentationLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListPresentationLogic.swift; sourceTree = "<group>"; };
+		A86E4BF129100CFD00D925AC /* ProductInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoViewController.swift; sourceTree = "<group>"; };
+		A87B445E291ED0F300584FA3 /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 		A8F0D4C22910041F00F300C2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		A8FE82182909BDF8004784A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8FE821A2909BDF8004784A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,20 +72,20 @@
 			path = KeyChainSaving;
 			sourceTree = "<group>";
 		};
-		A86E4BE729100CFD00D925AC /* NewsFeed */ = {
+		A86E4BE729100CFD00D925AC /* ProductList */ = {
 			isa = PBXGroup;
 			children = (
-				A86E4BF129100CFD00D925AC /* NewsViewController.swift */,
-				A86E4BE829100CFD00D925AC /* NewsFeedBusinessLogic.swift */,
-				A86E4BE929100CFD00D925AC /* NewsFeedAssembly.swift */,
-				A86E4BEA29100CFD00D925AC /* NewsFeedModel.swift */,
-				A86E4BEC29100CFD00D925AC /* NewsFeedCell.swift */,
-				A86E4BED29100CFD00D925AC /* NewsViewModel.swift */,
-				A86E4BEE29100CFD00D925AC /* NewsFeedWorker.swift */,
-				A86E4BEF29100CFD00D925AC /* NewsFeedPresentationLogic.swift */,
-				A87B445E291ED0F300584FA3 /* ItemsTableViewController.swift */,
+				A86E4BF129100CFD00D925AC /* ProductInfoViewController.swift */,
+				A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */,
+				A86E4BE929100CFD00D925AC /* ProductListAssembly.swift */,
+				A86E4BEA29100CFD00D925AC /* ProductListResponceModel.swift */,
+				A86E4BEC29100CFD00D925AC /* ProductListCell.swift */,
+				A86E4BED29100CFD00D925AC /* ProductViewMode.swift */,
+				A86E4BEE29100CFD00D925AC /* ProductListWorker.swift */,
+				A86E4BEF29100CFD00D925AC /* ProductListPresentationLogic.swift */,
+				A87B445E291ED0F300584FA3 /* ProductListViewController.swift */,
 			);
-			path = NewsFeed;
+			path = ProductList;
 			sourceTree = "<group>";
 		};
 		A87B445D291ECB9300584FA3 /* LogIn */ = {
@@ -110,7 +110,7 @@
 			children = (
 				A87B445D291ECB9300584FA3 /* LogIn */,
 				A8176A852913DB1100B84056 /* KeyChainSaving */,
-				A86E4BE729100CFD00D925AC /* NewsFeed */,
+				A86E4BE729100CFD00D925AC /* ProductList */,
 				A8FE822F2909C2D4004784A6 /* GoogleService-Info.plist */,
 				A8FE82182909BDF8004784A6 /* AppDelegate.swift */,
 				A8FE821A2909BDF8004784A6 /* SceneDelegate.swift */,
@@ -227,19 +227,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A86E4BF629100CFD00D925AC /* NewsFeedCell.swift in Sources */,
-				A86E4BF429100CFD00D925AC /* NewsFeedModel.swift in Sources */,
-				A87B445F291ED0F300584FA3 /* ItemsTableViewController.swift in Sources */,
-				A86E4BF329100CFD00D925AC /* NewsFeedAssembly.swift in Sources */,
-				A86E4BF229100CFD00D925AC /* NewsFeedBusinessLogic.swift in Sources */,
+				A86E4BF629100CFD00D925AC /* ProductListCell.swift in Sources */,
+				A86E4BF429100CFD00D925AC /* ProductListResponceModel.swift in Sources */,
+				A87B445F291ED0F300584FA3 /* ProductListViewController.swift in Sources */,
+				A86E4BF329100CFD00D925AC /* ProductListAssembly.swift in Sources */,
+				A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */,
 				A8176A892913DDEA00B84056 /* Auth.swift in Sources */,
-				A86E4BF729100CFD00D925AC /* NewsViewModel.swift in Sources */,
+				A86E4BF729100CFD00D925AC /* ProductViewMode.swift in Sources */,
 				A8FE82192909BDF8004784A6 /* AppDelegate.swift in Sources */,
 				A8FE82412909D543004784A6 /* UIViewPin.swift in Sources */,
 				A8F0D4C32910041F00F300C2 /* LogInViewController.swift in Sources */,
-				A86E4BF929100CFD00D925AC /* NewsFeedPresentationLogic.swift in Sources */,
-				A86E4BFA29100CFD00D925AC /* NewsViewController.swift in Sources */,
-				A86E4BF829100CFD00D925AC /* NewsFeedWorker.swift in Sources */,
+				A86E4BF929100CFD00D925AC /* ProductListPresentationLogic.swift in Sources */,
+				A86E4BFA29100CFD00D925AC /* ProductInfoViewController.swift in Sources */,
+				A86E4BF829100CFD00D925AC /* ProductListWorker.swift in Sources */,
 				A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */,
 				A8FE821B2909BDF8004784A6 /* SceneDelegate.swift in Sources */,
 			);
