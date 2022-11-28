@@ -7,7 +7,8 @@ import UIKit
 final class NewsViewController: UIViewController {
     private var imageView = UIImageView()
     private var titleLabel = UILabel()
-    private var descriptionLabel = UILabel()
+//    private var descriptionLabel = UILabel()
+    private var descriptionLabel = UITextView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +17,11 @@ final class NewsViewController: UIViewController {
 
     func setData(viewModel: NewsViewModel) {
         titleLabel.text = viewModel.title
-        descriptionLabel.text = viewModel.checlLink
+        descriptionLabel.dataDetectorTypes = .link
+        let attributedString = NSMutableAttributedString(string: "Чек")
+        attributedString.setAttributes([.link: URL(string: viewModel.checlLink)!], range: NSMakeRange(0, 2))
+        descriptionLabel.attributedText = attributedString
+        descriptionLabel.isEditable = false
         if let data = viewModel.imageData {
             imageView.image = UIImage(data: data)
         }
@@ -59,16 +64,21 @@ final class NewsViewController: UIViewController {
         view.addSubview(titleLabel)
         titleLabel.pinTop(to: imageView.bottomAnchor, 12)
         titleLabel.pin(to: view, [.left: 16, .right: 16])
-        titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 16).isActive = true
+        titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
     }
 
     private func setDescriptionLabel() {
         descriptionLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        descriptionLabel.numberOfLines = 0
+//        descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .secondaryLabel
+        descriptionLabel.backgroundColor = .green
         view.addSubview(descriptionLabel)
         descriptionLabel.pin(to: view, [.left: 16, .right: 16])
         descriptionLabel.pinTop(to: titleLabel.bottomAnchor, 8)
+//        descriptionLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+////        descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
+//        descriptionLabel.sizeToFit()
+        descriptionLabel.isScrollEnabled = false
     }
 
     // MARK: - Objc functions

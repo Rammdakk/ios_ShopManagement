@@ -21,10 +21,11 @@ class ItemsTableViewController: UIViewController {
     private var interactor: NewsFeedBusinessLogic
     private var tableView: UICollectionView =
             UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
     private var newsViewModels = [NewsViewModel]()
+    private var filteredItems = [NewsViewModel]()
 
     // MARK: - Lifecycle
 
@@ -53,11 +54,12 @@ class ItemsTableViewController: UIViewController {
     }
 
     private func setUpSearch() {
-        view.addSubview(searchController.searchBar)
+        searchBar.delegate = self
+        view.addSubview(searchBar)
 //        searchController.searchBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 10)
-        searchController.searchBar.pinBottom(to: tableView.topAnchor, 10)
-        searchController.searchBar.pinLeft(to: view, 8)
-        searchController.searchBar.pinRight(to: view, 40)
+        searchBar.pinBottom(to: tableView.topAnchor, 10)
+        searchBar.pinLeft(to: view, 8)
+        searchBar.pinRight(to: view, 40)
     }
 
     private func configureTableView() {
@@ -128,7 +130,7 @@ extension ItemsTableViewController: UICollectionViewDataSource {
         if isLoading {
             return 0
         } else {
-            return newsViewModels.count
+            return filteredItems.count
         }
     }
 
@@ -152,7 +154,7 @@ extension ItemsTableViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isLoading {
             let newsVC = NewsViewController()
-            newsVC.setData(viewModel: newsViewModels[indexPath.row])
+            newsVC.setData(viewModel: filteredItems[indexPath.row])
             navigationController?.pushViewController(newsVC, animated: true)
         }
     }
@@ -167,11 +169,28 @@ extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - SearchBarDelegate
+
+extension ItemsTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            filteredItems = newsViewModels
+        } else {
+            filteredItems = newsViewModels.filter({ (data) -> Bool in
+                let tmp = data.title
+                return tmp.lowercased().contains(searchText.lowercased())
+            })
+        }
+        self.reloadData()
+    }
+}
+
 // MARK: - Display Logic
 
 extension ItemsTableViewController: NewsFeedDisplayLogic {
     func displayData(_ viewModel: [NewsViewModel]) {
         newsViewModels = viewModel
+        filteredItems = newsViewModels
         reloadData()
     }
 }
