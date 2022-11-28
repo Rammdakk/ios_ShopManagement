@@ -45,10 +45,7 @@ final class ProductListCell: UICollectionViewCell {
         newsImageView.backgroundColor = .systemBackground
         contentView.addSubview(newsImageView)
         newsImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
-        newsImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant:
-        5).isActive = true
-        newsImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:
-        -5).isActive = true
+        newsImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         newsImageView.bottomAnchor.constraint(equalTo: newsTitleLabel.topAnchor, constant: -6).isActive = true
         newsImageView.pinWidth(to: newsTitleLabel.widthAnchor)
     }
