@@ -24,7 +24,7 @@ class ProductListViewController: UIViewController {
     private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
-    private var newsViewModels = [ProductViewMode]()
+    private var productsViewModels = [ProductViewMode]()
     private var filteredItems = [ProductViewMode]()
 
     // MARK: - Lifecycle
@@ -137,7 +137,7 @@ extension ProductListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
             -> UICollectionViewCell {
 
-        let viewModel = newsViewModels[indexPath.row]
+        let viewModel = productsViewModels[indexPath.row]
         if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier, for: indexPath)
                 as? ProductListCell {
             newsCell.configure(with: viewModel)
@@ -174,9 +174,9 @@ extension ProductListViewController: UICollectionViewDelegateFlowLayout {
 extension ProductListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            filteredItems = newsViewModels
+            filteredItems = productsViewModels
         } else {
-            filteredItems = newsViewModels.filter({ (data) -> Bool in
+            filteredItems = productsViewModels.filter({ (data) -> Bool in
                 let tmp = data.title
                 return tmp.lowercased().contains(searchText.lowercased())
             })
@@ -189,8 +189,8 @@ extension ProductListViewController: UISearchBarDelegate {
 
 extension ProductListViewController: ProductListDisplayLogic {
     func displayData(_ viewModel: [ProductViewMode]) {
-        newsViewModels = viewModel
-        filteredItems = newsViewModels
+        productsViewModels = viewModel
+        filteredItems = productsViewModels
         reloadData()
     }
 }

@@ -23,7 +23,7 @@ extension ProductListPresenter: ProductListPresentationLogic {
     func presentData(_ response: Model.GetNews.Response) {
 
         let data: [ProductViewMode]? = response.values.values?.map { (element: [String]) in
-            ProductViewMode(title: element[0], checlLink: element[2],
+            ProductViewMode(title: element[0], checkLink: element[2],
                     description: element[4], imageUrlPath: element[3], price: element[1])
 
         }

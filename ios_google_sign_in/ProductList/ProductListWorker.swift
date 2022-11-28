@@ -7,8 +7,8 @@ import GoogleSignIn
 
 protocol ProductListWorkerLogic {
     typealias Model = ProductListResponceModel
-    func getNews(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
-    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
+    func getProducts(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
+    func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
 }
 
@@ -16,7 +16,7 @@ class ProductListWorker: ProductListWorkerLogic {
     private let decoder: JSONDecoder = JSONDecoder()
     private let session: URLSession = URLSession.shared
 
-    func getNews(_ requests: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
+    func getProducts(_ requests: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
         let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
         let range = "A2:D100"
         guard let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)") else {
@@ -40,7 +40,7 @@ class ProductListWorker: ProductListWorkerLogic {
                     let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
                 if (response as? HTTPURLResponse)?.statusCode == 401 {
                     print("401")
-                    self?.getNewsWithRefreshingTokens(requests, completion: completion)
+                    self?.getProductsWithRefreshingTokens(requests, completion: completion)
                     return
                 }
                 completion(items)
@@ -53,8 +53,8 @@ class ProductListWorker: ProductListWorkerLogic {
         task.resume()
     }
 
-    func getNewsWithRefreshingTokens(_ request: Model.GetNews.Request,
-                                     completion: @escaping (Model.ItemsList) -> Void) {
+    func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request,
+                                         completion: @escaping (Model.ItemsList) -> Void) {
         print("getNewsWithRefreshingTokens")
         let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
         authentication?.do { auth, _ in

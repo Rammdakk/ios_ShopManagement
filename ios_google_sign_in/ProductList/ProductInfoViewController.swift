@@ -7,8 +7,8 @@ import UIKit
 final class ProductInfoViewController: UIViewController {
     private var imageView = UIImageView()
     private var titleLabel = UILabel()
-//    private var descriptionLabel = UILabel()
     private var descriptionLabel = UITextView()
+    private var phoneNumberField = UITextView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,10 +17,11 @@ final class ProductInfoViewController: UIViewController {
 
     func setData(viewModel: ProductViewMode) {
         titleLabel.text = viewModel.title
-        descriptionLabel.dataDetectorTypes = .link
-        let attributedString = NSMutableAttributedString(string: "Чек")
-        attributedString.setAttributes([.link: URL(string: viewModel.checlLink)!], range: NSMakeRange(0, 2))
-        descriptionLabel.attributedText = attributedString
+//        descriptionLabel.dataDetectorTypes = .link
+//        let attributedString = NSMutableAttributedString(string: "Чек")
+//        attributedString.setAttributes([.link: URL(string: viewModel.checlLink)!], range: NSMakeRange(0, 2))
+//        descriptionLabel.attributedText = attributedString
+        descriptionLabel.text = viewModel.description
         descriptionLabel.isEditable = false
         if let data = viewModel.imageData {
             imageView.image = UIImage(data: data)
@@ -35,6 +36,7 @@ final class ProductInfoViewController: UIViewController {
         setImageView()
         setTitleLabel()
         setDescriptionLabel()
+        setUpPhoneTextView()
     }
 
     private func setupNavbar() {
@@ -69,16 +71,20 @@ final class ProductInfoViewController: UIViewController {
 
     private func setDescriptionLabel() {
         descriptionLabel.font = .systemFont(ofSize: 14, weight: .regular)
-//        descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .secondaryLabel
         descriptionLabel.backgroundColor = .green
         view.addSubview(descriptionLabel)
         descriptionLabel.pin(to: view, [.left: 16, .right: 16])
         descriptionLabel.pinTop(to: titleLabel.bottomAnchor, 8)
-//        descriptionLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
-////        descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
-//        descriptionLabel.sizeToFit()
         descriptionLabel.isScrollEnabled = false
+    }
+
+    private func setUpPhoneTextView() {
+        phoneNumberField.isScrollEnabled = false
+        phoneNumberField.keyboardType = .phonePad
+        view.addSubview(phoneNumberField)
+        phoneNumberField.pin(to: view, [.left: 16, .right: 16])
+        phoneNumberField.pinTop(to: descriptionLabel.bottomAnchor, 8)
     }
 
     // MARK: - Objc functions
