@@ -31,9 +31,6 @@ class ProductListInteractor {
 
 extension ProductListInteractor: ProductListBusinessLogic {
     func fetchNews(_ request: Model.GetNews.Request) {
-//        worker.getNews(request) { [weak self] result in
-//            self?.presenter.presentData(Model.GetNews.Response(values: result))
-//        }
         worker.getProductsWithRefreshingTokens(request) { [weak self] result in
             self?.presenter.presentData(Model.GetNews.Response(values: result))
         }

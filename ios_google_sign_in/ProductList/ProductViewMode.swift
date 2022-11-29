@@ -7,7 +7,7 @@ import UIKit
 final class ProductViewMode {
     let title: String
     let description: String
-    let checlLink: String
+    let invoiceLink: String
     let price: String
     let imageURL: URL?
     var imageData: Data?
@@ -16,7 +16,7 @@ final class ProductViewMode {
          description: String = "", imageUrlPath: String, price: String) {
         self.title = title
         self.description = description
-        self.checlLink = checkLink
+        self.invoiceLink = checkLink
         self.price = price
         if let imageURL = URL(string: imageUrlPath) {
             self.imageURL = imageURL

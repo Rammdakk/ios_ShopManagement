@@ -9,7 +9,7 @@ final class ProductInfoViewController: UIViewController {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.delegate = self
-        scroll.contentSize = CGSize(width: self.view.frame.size.width, height: 1200)
+        scroll.contentSize = CGSize(width: self.view.frame.size.width, height: 2000)
         return scroll
     }()
     private var imageView = UIImageView()
@@ -55,39 +55,18 @@ final class ProductInfoViewController: UIViewController {
                 object: nil)
     }
 
-    // swiftlint:disable force_cast
-
     @objc
     func keyboardWillShow(_ notification: NSNotification) {
 
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
                 as? NSValue)?.cgRectValue
         else {
-            // if keyboard size is not available for some reason, dont do anything
+            // if keyboard size is not available
             return
         }
-
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-//        print("keyboardWillShow")
-//        guard let userInfo = notification.userInfo else {
-//            return
-//        }
-//
-//        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
-//        let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt
-//        let originFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-//        let targetFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//        if targetFrame.equalTo(originFrame) {
-//            return
-//        }
-//        delta = targetFrame.origin.y - phoneNumberField.frame.origin.y - phoneNumberField.frame.height - 10.0
-//
-//        UIView.animateKeyframes(withDuration: duration, delay: 0.0,
-//                options: UIView.KeyframeAnimationOptions(rawValue: curve), animations: { [self] in
-//            view.frame.origin.y += delta ?? 0
-//        })
     }
 
     @objc
@@ -95,21 +74,7 @@ final class ProductInfoViewController: UIViewController {
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-//        print("keyboardWillHide")
-//        guard let userInfo = notification.userInfo else {
-//            return
-//        }
-//
-//        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
-//        let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt
-//
-//        UIView.animateKeyframes(withDuration: duration, delay: 0.0,
-//                options: UIView.KeyframeAnimationOptions(rawValue: curve), animations: { [self] in
-//            view.frame.origin.y -= delta ?? 0
-//        })
     }
-
-// swiftlint:enable force_cast
 
 // MARK: - Configure
     func setData(viewModel: ProductViewMode) {
@@ -119,7 +84,7 @@ final class ProductInfoViewController: UIViewController {
         phoneNumberField.text = "+7"
         messageTextView.text = """
                                Спасибо за покупку \(viewModel.title)!\n
-                               🧾Чек можно скачать тут: \(viewModel.checlLink)\nЖдем Вас снова!\n
+                               🧾Чек можно скачать тут: \(viewModel.invoiceLink)\nЖдем Вас снова!\n
                                """
         if let data = viewModel.imageData {
             imageView.image = UIImage(data: data)
@@ -204,15 +169,15 @@ final class ProductInfoViewController: UIViewController {
 
     private func setUpSendButton() {
         sendButton.setTitle("Button", for: .normal)
-        sendButton.backgroundColor = .black
+        sendButton.backgroundColor = .label
+        sendButton.setTitleColor(.systemBackground, for: .normal)
         scrollView.addSubview(sendButton)
         sendButton.pin(to: view, [.left: 18, .right: 18])
         sendButton.layer.cornerRadius = 8
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.setHeight(to: 45)
         NSLayoutConstraint.activate([
-            sendButton.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -5),
-//            sendButton.centerYAnchor.constraint(equalTo: scrollView.frameLayoutGuide.centerYAnchor)
+            sendButton.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -5)
         ])
         sendButton.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
     }
@@ -227,7 +192,7 @@ final class ProductInfoViewController: UIViewController {
         urlComps?.queryItems = queryItems
         if let url = urlComps?.url {
             print(url)
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
             print("https://wa.me/\(phoneNumberField.text ?? "")?text=\(messageTextView.text ?? "")")
         }
@@ -252,7 +217,10 @@ extension ProductInfoViewController: UIScrollViewDelegate {
         scrollView.centerYAnchor.constraint(equalTo: layout.centerYAnchor).isActive = true
         scrollView.widthAnchor.constraint(equalTo: layout.widthAnchor).isActive = true
         scrollView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
+        var height = 10.0
+        scrollView.subviews.forEach { view in
+            height += view.layer.frame.height
+        }
+        scrollView.contentSize.height = height
     }
 }
-
-
