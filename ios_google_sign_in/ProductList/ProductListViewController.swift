@@ -15,8 +15,6 @@ protocol ProductListDisplayLogic: AnyObject {
 
 class ProductListViewController: UIViewController {
 
-    // MARK: - External vars
-
     // MARK: - Internal vars
     private var interactor: ProductListBusinessLogic
     private var tableView: UICollectionView =
@@ -26,6 +24,7 @@ class ProductListViewController: UIViewController {
     private var isLoading = false
     private var productsViewModels = [ProductViewMode]()
     private var filteredItems = [ProductViewMode]()
+    private var settingsButton = UIButton()
 
     // MARK: - Lifecycle
 
@@ -51,15 +50,27 @@ class ProductListViewController: UIViewController {
         view.backgroundColor = .systemBackground
         configureTableView()
         setUpSearch()
+        setUpButton()
+    }
+
+    private func setUpButton() {
+        let fileManager = FileManager.default
+        settingsButton.setImage(fileManager.getImageInBundle(bundlePath: "Filter.png"), for: .normal)
+        settingsButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        view.addSubview(settingsButton)
+        settingsButton.pinBottom(to: searchBar.bottomAnchor, 2)
+        settingsButton.pinLeft(to: searchBar.trailingAnchor)
+        settingsButton.pinTop(to: searchBar.topAnchor, 2)
+        settingsButton.pinRight(to: view, 8)
+        settingsButton.addTarget(self, action: #selector(goToSetting), for: .touchUpInside)
     }
 
     private func setUpSearch() {
         searchBar.delegate = self
         view.addSubview(searchBar)
-//        searchController.searchBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 10)
         searchBar.pinBottom(to: tableView.topAnchor, 10)
         searchBar.pinLeft(to: view, 8)
-        searchBar.pinRight(to: view, 40)
+        searchBar.pinRight(to: view, 60)
         searchBar.enablesReturnKeyAutomatically = false
     }
 
@@ -114,6 +125,11 @@ class ProductListViewController: UIViewController {
     // MARK: - Button action
 
     @objc
+    private func goToSetting() {
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
+    }
+
+    @objc
     private func updateData() {
         refreshControl.endRefreshing()
         loadDataFromSheets()
@@ -144,7 +160,8 @@ extension ProductListViewController: UICollectionViewDataSource {
             -> UICollectionViewCell {
 
         let viewModel = productsViewModels[indexPath.row]
-        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier, for: indexPath)
+        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier,
+                for: indexPath)
                 as? ProductListCell {
             newsCell.configure(with: viewModel)
             return newsCell
