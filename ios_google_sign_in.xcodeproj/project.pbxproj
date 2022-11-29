@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E1268D467B60C3C1799E850 /* ProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */; };
 		A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A862913DB3800B84056 /* KeychainHelper.swift */; };
 		A8176A892913DDEA00B84056 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A882913DDEA00B84056 /* Auth.swift */; };
 		A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */; };
@@ -16,7 +17,6 @@
 		A86E4BF729100CFD00D925AC /* ProductViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BED29100CFD00D925AC /* ProductViewMode.swift */; };
 		A86E4BF829100CFD00D925AC /* ProductListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEE29100CFD00D925AC /* ProductListWorker.swift */; };
 		A86E4BF929100CFD00D925AC /* ProductListPresentationLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BEF29100CFD00D925AC /* ProductListPresentationLogic.swift */; };
-		A86E4BFA29100CFD00D925AC /* ProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BF129100CFD00D925AC /* ProductInfoViewController.swift */; };
 		A87B445F291ED0F300584FA3 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87B445E291ED0F300584FA3 /* ProductListViewController.swift */; };
 		A8F0D4C32910041F00F300C2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F0D4C22910041F00F300C2 /* LogInViewController.swift */; };
 		A8FE82192909BDF8004784A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE82182909BDF8004784A6 /* AppDelegate.swift */; };
@@ -29,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductInfoViewController.swift; path = ProductInfo/ProductInfoViewController.swift; sourceTree = "<group>"; };
 		A8176A862913DB3800B84056 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		A8176A882913DDEA00B84056 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListBusinessLogic.swift; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		A86E4BED29100CFD00D925AC /* ProductViewMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewMode.swift; sourceTree = "<group>"; };
 		A86E4BEE29100CFD00D925AC /* ProductListWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListWorker.swift; sourceTree = "<group>"; };
 		A86E4BEF29100CFD00D925AC /* ProductListPresentationLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListPresentationLogic.swift; sourceTree = "<group>"; };
-		A86E4BF129100CFD00D925AC /* ProductInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoViewController.swift; sourceTree = "<group>"; };
 		A87B445E291ED0F300584FA3 /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 		A8F0D4C22910041F00F300C2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		A8FE82182909BDF8004784A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,7 +75,6 @@
 		A86E4BE729100CFD00D925AC /* ProductList */ = {
 			isa = PBXGroup;
 			children = (
-				A86E4BF129100CFD00D925AC /* ProductInfoViewController.swift */,
 				A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */,
 				A86E4BE929100CFD00D925AC /* ProductListAssembly.swift */,
 				A86E4BEA29100CFD00D925AC /* ProductListResponceModel.swift */,
@@ -118,6 +117,7 @@
 				A8FE82212909BDF9004784A6 /* Assets.xcassets */,
 				A8FE82232909BDF9004784A6 /* LaunchScreen.storyboard */,
 				A8FE82262909BDF9004784A6 /* Info.plist */,
+				2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */,
 			);
 			path = ios_google_sign_in;
 			sourceTree = "<group>";
@@ -238,10 +238,10 @@
 				A8FE82412909D543004784A6 /* UIViewPin.swift in Sources */,
 				A8F0D4C32910041F00F300C2 /* LogInViewController.swift in Sources */,
 				A86E4BF929100CFD00D925AC /* ProductListPresentationLogic.swift in Sources */,
-				A86E4BFA29100CFD00D925AC /* ProductInfoViewController.swift in Sources */,
 				A86E4BF829100CFD00D925AC /* ProductListWorker.swift in Sources */,
 				A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */,
 				A8FE821B2909BDF8004784A6 /* SceneDelegate.swift in Sources */,
+				2E1268D467B60C3C1799E850 /* ProductInfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
