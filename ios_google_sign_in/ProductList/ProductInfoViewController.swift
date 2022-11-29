@@ -168,7 +168,7 @@ final class ProductInfoViewController: UIViewController {
     }
 
     private func setUpSendButton() {
-        sendButton.setTitle("Button", for: .normal)
+        sendButton.setTitle("Отправить", for: .normal)
         sendButton.backgroundColor = .label
         sendButton.setTitleColor(.systemBackground, for: .normal)
         scrollView.addSubview(sendButton)
