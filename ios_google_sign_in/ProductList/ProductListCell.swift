@@ -59,7 +59,7 @@ final class ProductListCell: UICollectionViewCell {
         contentView.addSubview(productTitle)
         productTitle.translatesAutoresizingMaskIntoConstraints = false
         productTitle.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor).isActive = true
-        productTitle.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor).isActive = true
+        productTitle.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: -4).isActive = true
         productTitle.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -4).isActive = true
     }
 
@@ -70,7 +70,7 @@ final class ProductListCell: UICollectionViewCell {
         contentView.addSubview(descriptionLabel)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor).isActive = true
-        descriptionLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: -4).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: priceLabel.topAnchor, constant:
         -4).isActive = true
     }
