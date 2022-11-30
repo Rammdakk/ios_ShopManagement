@@ -56,11 +56,14 @@ class ProductListViewController: UIViewController {
     private func setUpButton() {
         let fileManager = FileManager.default
         settingsButton.setImage(fileManager.getImageInBundle(bundlePath: "Filter.png"), for: .normal)
-        settingsButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         view.addSubview(settingsButton)
-        settingsButton.pinBottom(to: searchBar.bottomAnchor, 2)
-        settingsButton.pinLeft(to: searchBar.trailingAnchor)
-        settingsButton.pinTop(to: searchBar.topAnchor, 2)
+        settingsButton.contentHorizontalAlignment = .fill
+        settingsButton.contentVerticalAlignment = .fill
+        settingsButton.backgroundColor = .green
+        settingsButton.imageView?.contentMode = .scaleAspectFit
+        settingsButton.pinBottom(to: searchBar.bottomAnchor)
+        settingsButton.pinLeft(to: searchBar.trailingAnchor, 4)
+        settingsButton.pinTop(to: searchBar.topAnchor)
         settingsButton.pinRight(to: view, 8)
         settingsButton.addTarget(self, action: #selector(goToSetting), for: .touchUpInside)
     }
@@ -70,8 +73,14 @@ class ProductListViewController: UIViewController {
         view.addSubview(searchBar)
         searchBar.pinBottom(to: tableView.topAnchor, 10)
         searchBar.pinLeft(to: view, 8)
-        searchBar.pinRight(to: view, 60)
+        searchBar.pinRight(to: view, 67)
         searchBar.enablesReturnKeyAutomatically = false
+        searchBar.searchBarStyle = .minimal
+//        searchBar.searchTextField.backgroundColor = .green
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.layer.borderWidth = 1.0
+        searchBar.layer.cornerRadius = 8
+        searchBar.layer.borderColor = UIColor.lightGray.cgColor
     }
 
     @objc

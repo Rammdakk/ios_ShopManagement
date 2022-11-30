@@ -8,7 +8,8 @@ import GoogleSignIn
 protocol ProductListWorkerLogic {
     typealias Model = ProductListResponceModel
     func getProducts(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
-    func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
+    func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request,
+                                         completion: @escaping (Model.ItemsList) -> Void)
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
 }
 
