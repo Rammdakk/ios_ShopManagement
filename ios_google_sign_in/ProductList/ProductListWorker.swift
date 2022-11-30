@@ -18,7 +18,9 @@ class ProductListWorker: ProductListWorkerLogic {
     private let session: URLSession = URLSession.shared
 
     func getProducts(_ requests: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
-        let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
+        let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) ??
+                "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
+//        let range = "\(UserDefaults.standard.integer(forKey: SettingKeys.pageNumber))!A2:D100"
         let range = "A2:D100"
         guard let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)") else {
             return
@@ -62,7 +64,8 @@ class ProductListWorker: ProductListWorkerLogic {
             guard let accessToken = auth?.accessToken else {
                 return
             }
-            let sheetID = "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
+            let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) ??
+                    "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
             let range = "A2:E100"
             guard let url =
             URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")

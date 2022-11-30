@@ -45,8 +45,6 @@ final class ProductInfoViewController: UIViewController {
                 object: nil)
     }
 
-    var delta: Double?
-
     func unsubscribeFromKeyboard() {
         NotificationCenter.default.removeObserver(self, name: UIWindow.keyboardWillShowNotification,
                 object: nil)
@@ -91,7 +89,7 @@ final class ProductInfoViewController: UIViewController {
         }
     }
 
-// MARK: - Private methods
+// MARK: - SetUp UI
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -186,7 +184,10 @@ final class ProductInfoViewController: UIViewController {
 
     @objc
     func sendMessage(sender: UIButton!) {
-        print("call")
+        if phoneNumberField.text.count < 5 {
+            // TODO: - Show warning
+            return
+        }
         let queryItems = [URLQueryItem(name: "text", value: messageTextView.text)]
         var urlComps = URLComponents(string: "https://wa.me/\(phoneNumberField.text ?? "")")
         urlComps?.queryItems = queryItems
@@ -208,6 +209,8 @@ final class ProductInfoViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
+
+// MARK: - UIScrollViewDelegate
 
 extension ProductInfoViewController: UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
