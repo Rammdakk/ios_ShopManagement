@@ -59,7 +59,6 @@ class ProductListViewController: UIViewController {
         view.addSubview(settingsButton)
         settingsButton.contentHorizontalAlignment = .fill
         settingsButton.contentVerticalAlignment = .fill
-        settingsButton.backgroundColor = .green
         settingsButton.imageView?.contentMode = .scaleAspectFit
         settingsButton.pinBottom(to: searchBar.bottomAnchor)
         settingsButton.pinLeft(to: searchBar.trailingAnchor, 4)
@@ -76,7 +75,6 @@ class ProductListViewController: UIViewController {
         searchBar.pinRight(to: view, 67)
         searchBar.enablesReturnKeyAutomatically = false
         searchBar.searchBarStyle = .minimal
-//        searchBar.searchTextField.backgroundColor = .green
         searchBar.searchTextField.borderStyle = .none
         searchBar.layer.borderWidth = 1.0
         searchBar.layer.cornerRadius = 8

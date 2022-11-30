@@ -32,7 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2E1263EFC685A2DF3A7CDB86 /* FileManager_ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileManager_ext.swift; path = Extensions/FileManager_ext.swift; sourceTree = "<group>"; };
+		2E1263EFC685A2DF3A7CDB86 /* FileManager_ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager_ext.swift; sourceTree = "<group>"; };
 		2E12686175AE7CFE2F816BA1 /* Filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Filter.png; path = Images.bundle/Filter.png; sourceTree = "<group>"; };
 		2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoViewController.swift; sourceTree = "<group>"; };
 		2E126CDE50977473E0E22243 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +117,15 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		A8AE84E12937B5B60065DB53 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A8FE82402909D543004784A6 /* UIViewPin.swift */,
+				2E1263EFC685A2DF3A7CDB86 /* FileManager_ext.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		A8FE820C2909BDF8004784A6 = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +138,7 @@
 		A8FE82172909BDF8004784A6 /* ios_google_sign_in */ = {
 			isa = PBXGroup;
 			children = (
+				A8AE84E12937B5B60065DB53 /* Extension */,
 				A8AE84E02937B3750065DB53 /* Setting */,
 				A8AE84DF2937B35A0065DB53 /* ProductInfo */,
 				A87B445D291ECB9300584FA3 /* LogIn */,
@@ -137,12 +147,10 @@
 				A8FE822F2909C2D4004784A6 /* GoogleService-Info.plist */,
 				A8FE82182909BDF8004784A6 /* AppDelegate.swift */,
 				A8FE821A2909BDF8004784A6 /* SceneDelegate.swift */,
-				A8FE82402909D543004784A6 /* UIViewPin.swift */,
 				A8FE82212909BDF9004784A6 /* Assets.xcassets */,
 				A8FE82232909BDF9004784A6 /* LaunchScreen.storyboard */,
 				A8FE82262909BDF9004784A6 /* Info.plist */,
 				2E12686175AE7CFE2F816BA1 /* Filter.png */,
-				2E1263EFC685A2DF3A7CDB86 /* FileManager_ext.swift */,
 			);
 			path = ios_google_sign_in;
 			sourceTree = "<group>";
