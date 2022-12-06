@@ -31,8 +31,34 @@ class ProductListInteractor {
 
 extension ProductListInteractor: ProductListBusinessLogic {
     func fetchNews(_ request: Model.GetNews.Request) {
+//        var items: Model.ItemsList
         worker.getProductsWithRefreshingTokens(request) { [weak self] result in
-            self?.presenter.presentData(Model.GetNews.Response(values: result))
+            switch result {
+            case .success(let items):
+                print("success")
+                self?.presenter.presentData(Model.GetNews.Response(values: items))
+            case .failure(let err):
+                print("failure")
+                switch err {
+                case .badURL:
+                    self?.presenter.displayError("bad URL")
+                    print("badUrl")
+                case .decoding:
+                    self?.presenter.displayError("bad URL")
+                    print("decoding")
+                case .emptyData:
+                    self?.presenter.displayError("bad URL")
+                    print("noData")
+                case .noAccessToken:
+                    self?.presenter.displayError("bad URL")
+                    print("noAccessToken")
+                case .network(let error):
+                    self?.presenter.displayError("Error: \(error._code)")
+                    print(error._code)
+                }
+
+            }
+
         }
     }
 }

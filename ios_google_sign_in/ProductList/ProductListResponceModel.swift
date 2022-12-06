@@ -24,3 +24,18 @@ enum ProductListResponceModel {
         let status: String
     }
 }
+
+public enum Result<Success, Failure: Swift.Error> {
+    /// A success, storing a `Success` value.
+    case success(Success)
+    /// A failure, storing a `Failure` value.
+    case failure(Failure)
+}
+
+public enum Error: Swift.Error {
+    case badURL
+    case decoding
+    case emptyData
+    case noAccessToken
+    case network(Swift.Error)
+}

@@ -10,7 +10,8 @@ import GoogleSignIn
 
 protocol ProductListDisplayLogic: AnyObject {
     typealias Model = ProductListResponceModel
-    func displayData(_ viewModel: [ProductViewMode])
+    func displayData(_ viewModel: [ProductViewModel])
+    func displayError(_ errorMessage: String)
 }
 
 class ProductListViewController: UIViewController {
@@ -22,9 +23,10 @@ class ProductListViewController: UIViewController {
     private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
-    private var productsViewModels = [ProductViewMode]()
-    private var filteredItems = [ProductViewMode]()
+    private var productsViewModels = [ProductViewModel]()
+    private var filteredItems = [ProductViewModel]()
     private var settingsButton = UIButton()
+    private var errorButton = UIButton()
 
     // MARK: - Lifecycle
 
@@ -41,6 +43,10 @@ class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         updateData()
     }
 
@@ -51,6 +57,7 @@ class ProductListViewController: UIViewController {
         configureTableView()
         setUpSearch()
         setUpButton()
+        setUpErrorHandling()
     }
 
     private func setUpButton() {
@@ -81,10 +88,27 @@ class ProductListViewController: UIViewController {
         searchBar.layer.borderColor = UIColor.lightGray.cgColor
     }
 
+    private func setUpErrorHandling() {
+        view.addSubview(errorButton)
+        errorButton.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 2)
+        errorButton.pin(to: view, [.right, .left], 8)
+        errorButton.layer.cornerRadius = 8
+        errorButton.translatesAutoresizingMaskIntoConstraints = false
+        errorButton.setHeight(to: 45)
+        errorButton.sizeToFit()
+        errorButton.backgroundColor = .red
+        errorButton.isHidden = true
+        errorButton.addTarget(self, action: #selector(updateData), for: .touchUpInside)
+        errorButton.titleLabel?.numberOfLines = 0
+        errorButton.titleLabel?.lineBreakMode = .byWordWrapping
+    }
+
     @objc
     func dismiss(gesture: UITapGestureRecognizer) {
         view.endEditing(true)
     }
+
+    // MARK: - CollectionView configure
 
     private func configureTableView() {
         setTableViewUpdates()
@@ -96,7 +120,7 @@ class ProductListViewController: UIViewController {
     private func setTableViewUpdates() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
-        tableView.addSubview(refreshControl) // not required when using UITableViewController
+        tableView.addSubview(refreshControl)
     }
 
     private func setTableViewDelegate() {
@@ -139,6 +163,7 @@ class ProductListViewController: UIViewController {
     @objc
     private func updateData() {
         refreshControl.endRefreshing()
+        errorButton.isHidden = true
         loadDataFromSheets()
     }
 
@@ -190,6 +215,8 @@ extension ProductListViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -199,7 +226,7 @@ extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - SearchBarDelegate
+// MARK: - UISearchBarDelegate
 
 extension ProductListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -222,9 +249,32 @@ extension ProductListViewController: UISearchBarDelegate {
 // MARK: - Display Logic
 
 extension ProductListViewController: ProductListDisplayLogic {
-    func displayData(_ viewModel: [ProductViewMode]) {
+    func displayData(_ viewModel: [ProductViewModel]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.isHidden = false
+            if let view = self?.errorButton {
+                UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    view.isHidden = true
+                })
+            }
+        }
         productsViewModels = viewModel
         filteredItems = productsViewModels
         reloadData()
+    }
+
+    func displayError(_ errorMessage: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.isHidden = true
+            if let view = self?.errorButton {
+                UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    view.isHidden = false
+                })
+                view.setTitle("\(errorMessage)\npress to update", for: .normal)
+                view.titleLabel?.textAlignment = .center
+                view.sizeToFit()
+            }
+        }
+        print("error")
     }
 }

@@ -75,7 +75,7 @@ final class ProductInfoViewController: UIViewController {
     }
 
 // MARK: - Configure
-    func setData(viewModel: ProductViewMode) {
+    func setData(viewModel: ProductViewModel) {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         descriptionLabel.isEditable = false

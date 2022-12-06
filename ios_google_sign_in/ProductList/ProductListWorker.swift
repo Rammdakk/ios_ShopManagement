@@ -7,9 +7,8 @@ import GoogleSignIn
 
 protocol ProductListWorkerLogic {
     typealias Model = ProductListResponceModel
-    func getProducts(_ request: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void)
     func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request,
-                                         completion: @escaping (Model.ItemsList) -> Void)
+                                         completion: @escaping (Result<Model.ItemsList, Error>) -> Void)
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
 }
 
@@ -17,51 +16,12 @@ class ProductListWorker: ProductListWorkerLogic {
     private let decoder: JSONDecoder = JSONDecoder()
     private let session: URLSession = URLSession.shared
 
-    func getProducts(_ requests: Model.GetNews.Request, completion: @escaping (Model.ItemsList) -> Void) {
-        let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) ??
-                "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
-//        let range = "\(UserDefaults.standard.integer(forKey: SettingKeys.pageNumber))!A2:D100"
-        let range = "A2:D100"
-        guard let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)") else {
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        guard let result = KeychainHelper.standard.read(service: service,
-                account: account,
-                type: Auth.self)
-        else {
-            return
-        }
-        let accessToken = result.accessToken
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        let task = session.dataTask(with: request) { [weak self] data, response, error in
-            if
-                    let data = data,
-                    let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                if (response as? HTTPURLResponse)?.statusCode == 401 {
-                    print("401")
-                    self?.getProductsWithRefreshingTokens(requests, completion: completion)
-                    return
-                }
-                completion(items)
-            } else {
-                print("Could not get any content")
-                print(error as Any)
-            }
-        }
-
-        task.resume()
-    }
-
     func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request,
-                                         completion: @escaping (Model.ItemsList) -> Void) {
-        print("getNewsWithRefreshingTokens")
+                                         completion: @escaping (Result<Model.ItemsList, Error>) -> Void) {
         let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
         authentication?.do { auth, _ in
             guard let accessToken = auth?.accessToken else {
+                completion(.failure(Error.noAccessToken))
                 return
             }
             let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) ??
@@ -70,24 +30,32 @@ class ProductListWorker: ProductListWorkerLogic {
             guard let url =
             URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
             else {
+                completion(.failure(Error.badURL))
                 return
             }
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-            let task = self.session.dataTask(with: request) { [weak self] data, response, _ in
-                if
-                        let data = data,
-                        let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                    if (response as? HTTPURLResponse)?.statusCode == 401 {
+            self.session.dataTask(with: request) { [weak self] data, response, error in
+                        if let error = error {
+                            completion(.failure(Error.network(error)))
+                        }
+                        if (response as? HTTPURLResponse)?.statusCode != 200 {
+                            completion(.failure(Error.network(NSError(domain: "", code: (response as? HTTPURLResponse)?.statusCode ?? 404, userInfo: nil))))
+                            return
+                        }
+                        guard let data = data else {
+                            completion(.failure(Error.emptyData))
+                            return
+                        }
+                        if let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
+                            completion(.success(items))
+                        } else {
+                            completion(.failure(Error.decoding))
+                        }
                     }
-                    completion(items)
-                } else {
-                    print("Could not get any content")
-                }
-            }
-            task.resume()
+                    .resume()
         }
     }
 
