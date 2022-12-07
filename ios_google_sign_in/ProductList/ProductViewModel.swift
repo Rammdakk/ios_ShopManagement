@@ -12,13 +12,13 @@ final class ProductViewModel {
     let imageURL: URL?
     var imageData: Data?
 
-    init(title: String, checkLink: String = "Чек отсутсвует",
-         description: String = "", imageUrlPath: String, price: String) {
+    init(title: String, checkLink: String,
+         description: String = "", imageUrlPath: String?, price: String?) {
         self.title = title
         self.description = description
         invoiceLink = checkLink
-        self.price = price
-        if let imageURL = URL(string: imageUrlPath) {
+        self.price = price ?? ""
+        if let imageURL = URL(string: imageUrlPath ?? "https://www.short.ink/zv8gTW8R0eu") {
             self.imageURL = imageURL
         } else {
             imageURL = URL(string: "https://www.short.ink/zv8gTW8R0eu")

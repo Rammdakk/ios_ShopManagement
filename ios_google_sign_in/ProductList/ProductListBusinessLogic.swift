@@ -31,7 +31,6 @@ class ProductListInteractor {
 
 extension ProductListInteractor: ProductListBusinessLogic {
     func fetchNews(_ request: Model.GetNews.Request) {
-//        var items: Model.ItemsList
         worker.getProductsWithRefreshingTokens(request) { [weak self] result in
             switch result {
             case .success(let items):
@@ -41,20 +40,31 @@ extension ProductListInteractor: ProductListBusinessLogic {
                 print("failure")
                 switch err {
                 case .badURL:
-                    self?.presenter.displayError("bad URL")
+                    self?.presenter.displayError("Некорректная ссылка на таблицу.")
                     print("badUrl")
                 case .decoding:
-                    self?.presenter.displayError("bad URL")
+                    self?.presenter.displayError("Ошибка получения данных.")
                     print("decoding")
                 case .emptyData:
-                    self?.presenter.displayError("bad URL")
+                    self?.presenter.displayError("Нет данных.")
                     print("noData")
                 case .noAccessToken:
-                    self?.presenter.displayError("bad URL")
+                    self?.presenter.displayError("Ошибка авторизации.")
                     print("noAccessToken")
                 case .network(let error):
-                    self?.presenter.displayError("Error: \(error._code)")
-                    print(error._code)
+                    switch error._code {
+                    case 401:
+                        self?.presenter.displayError("Ошибка авторизации.")
+                    case 403:
+                        self?.presenter.displayError("Ошибка получения доступа к таблице.")
+                    case 404:
+                        self?.presenter.displayError("Ошибка, не удалось получить данные.")
+                    case 500...599:
+                        self?.presenter.displayError("Ошибка на сервере. Повторите позднее.")
+
+                    default:
+                        self?.presenter.displayError("Ошибка: \(error._code)")
+                    }
                 }
 
             }

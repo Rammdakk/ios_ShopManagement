@@ -92,7 +92,11 @@ final class ProductListCell: UICollectionViewCell {
     func configure(with news: ProductViewModel) {
         productTitle.text = news.title + "\n"
         descriptionLabel.text = news.description.replacingOccurrences(of: "\n", with: " ")
-        priceLabel.text = "$" + news.price
+        if news.price.isEmpty {
+            priceLabel.text = "Цена не указана"
+        } else {
+            priceLabel.text = "$" + news.price
+        }
         if let url = news.imageURL {
             setImage(from: url, news: news)
         }

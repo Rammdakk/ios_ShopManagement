@@ -23,8 +23,8 @@ class ProductListPresenter {
 extension ProductListPresenter: ProductListPresentationLogic {
     func presentData(_ response: Model.GetNews.Response) {
         let data: [ProductViewModel]? = response.values.values?.map { (element: [String]) in
-            ProductViewModel(title: element[0], checkLink: element[2],
-                    description: element[4], imageUrlPath: element[3], price: element[1])
+            ProductViewModel(title: element.get(at: 0) ?? "-", checkLink: element.get(at: 2) ?? "",
+                             description: element.get(at: 4) ?? " ", imageUrlPath: element.get(at: 3), price: element.get(at: 1))
 
         }
         viewController?.displayData(data ?? [ProductViewModel]())

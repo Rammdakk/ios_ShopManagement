@@ -24,6 +24,8 @@
 		A87B445F291ED0F300584FA3 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87B445E291ED0F300584FA3 /* ProductListViewController.swift */; };
 		A8AE84E32937C0B70065DB53 /* SettingUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE84E22937C0B70065DB53 /* SettingUserDefaults.swift */; };
 		A8AE84E529380C5D0065DB53 /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AE84E429380C5D0065DB53 /* StringSubstring.swift */; };
+		A8E644682940F43F00FC9E64 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E644672940F43F00FC9E64 /* logout.png */; };
+		A8E6446A2941087E00FC9E64 /* ArraySafeGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E644692941087E00FC9E64 /* ArraySafeGet.swift */; };
 		A8F0D4C32910041F00F300C2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F0D4C22910041F00F300C2 /* LogInViewController.swift */; };
 		A8FE82192909BDF8004784A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE82182909BDF8004784A6 /* AppDelegate.swift */; };
 		A8FE821B2909BDF8004784A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE821A2909BDF8004784A6 /* SceneDelegate.swift */; };
@@ -52,6 +54,8 @@
 		A87B445E291ED0F300584FA3 /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 		A8AE84E22937C0B70065DB53 /* SettingUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUserDefaults.swift; sourceTree = "<group>"; };
 		A8AE84E429380C5D0065DB53 /* StringSubstring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSubstring.swift; sourceTree = "<group>"; };
+		A8E644672940F43F00FC9E64 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		A8E644692941087E00FC9E64 /* ArraySafeGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArraySafeGet.swift; sourceTree = "<group>"; };
 		A8F0D4C22910041F00F300C2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		A8FE82182909BDF8004784A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8FE821A2909BDF8004784A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 				A8FE82402909D543004784A6 /* UIViewPin.swift */,
 				2E1263EFC685A2DF3A7CDB86 /* FileManagerGetImage.swift */,
 				A8AE84E429380C5D0065DB53 /* StringSubstring.swift */,
+				A8E644692941087E00FC9E64 /* ArraySafeGet.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 				A8FE82212909BDF9004784A6 /* Assets.xcassets */,
 				A8FE82232909BDF9004784A6 /* LaunchScreen.storyboard */,
 				A8FE82262909BDF9004784A6 /* Info.plist */,
+				A8E644672940F43F00FC9E64 /* logout.png */,
 				A81FE3E2293F4A5C00071EF8 /* google.png */,
 				2E12686175AE7CFE2F816BA1 /* Filter.png */,
 			);
@@ -236,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8E644682940F43F00FC9E64 /* logout.png in Resources */,
 				A81FE3E3293F4C8A00071EF8 /* google.png in Resources */,
 				A8FE82252909BDF9004784A6 /* LaunchScreen.storyboard in Resources */,
 				A8FE82302909C2D4004784A6 /* GoogleService-Info.plist in Resources */,
@@ -274,6 +281,7 @@
 				A86E4BF629100CFD00D925AC /* ProductListCell.swift in Sources */,
 				A86E4BF429100CFD00D925AC /* ProductListResponceModel.swift in Sources */,
 				A87B445F291ED0F300584FA3 /* ProductListViewController.swift in Sources */,
+				A8E6446A2941087E00FC9E64 /* ArraySafeGet.swift in Sources */,
 				A86E4BF329100CFD00D925AC /* ProductListAssembly.swift in Sources */,
 				A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */,
 				A8176A892913DDEA00B84056 /* Auth.swift in Sources */,

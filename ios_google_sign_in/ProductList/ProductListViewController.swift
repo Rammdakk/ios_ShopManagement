@@ -26,6 +26,9 @@ class ProductListViewController: UIViewController {
     private var productsViewModels = [ProductViewModel]()
     private var filteredItems = [ProductViewModel]()
     private var settingsButton = UIButton()
+    private var signOutButton = UIButton()
+    private var helloMessage = UILabel()
+    private var helloMessageUser = UILabel()
     private var errorButton = UIButton()
 
     // MARK: - Lifecycle
@@ -72,6 +75,29 @@ class ProductListViewController: UIViewController {
         settingsButton.pinTop(to: searchBar.topAnchor)
         settingsButton.pinRight(to: view, 8)
         settingsButton.addTarget(self, action: #selector(goToSetting), for: .touchUpInside)
+        
+        signOutButton.setImage(fileManager.getImageInBundle(bundlePath: "logout.png"), for: .normal)
+        view.addSubview(signOutButton)
+        signOutButton.contentHorizontalAlignment = .fill
+        signOutButton.contentVerticalAlignment = .fill
+        signOutButton.imageView?.contentMode = .scaleAspectFit
+        signOutButton.pinLeft(to: searchBar.trailingAnchor, 4)
+        signOutButton.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 5)
+        signOutButton.pinRight(to: view, 8)
+        signOutButton.addTarget(self, action: #selector(signOut), for: .touchUpInside)
+        
+        helloMessage.text = "Привет  👋"
+        view.addSubview(helloMessage)
+        helloMessage.font = UIFont.systemFont(ofSize: 18.00)
+        helloMessage.numberOfLines = 1
+        helloMessage.pinLeft(to: view, 12)
+        helloMessage.pinTop(to: signOutButton)
+        helloMessageUser.text = GIDSignIn.sharedInstance.currentUser?.profile?.name ?? "User"
+        view.addSubview(helloMessageUser)
+        helloMessageUser.font = UIFont.boldSystemFont(ofSize: 18.00)
+        helloMessageUser.numberOfLines = 1
+        helloMessageUser.pinLeft(to: view, 12)
+        helloMessageUser.pinTop(to: helloMessage.bottomAnchor, 1)
     }
 
     private func setUpSearch() {
@@ -168,8 +194,11 @@ class ProductListViewController: UIViewController {
     }
 
     @objc
-    private func goBack() {
-        navigationController?.popViewController(animated: true)
+    private func signOut() {
+        GIDSignIn.sharedInstance.signOut()
+        UserDefaults.standard.setValue("", forKey: SettingKeys.sheetsID)
+        UserDefaults.standard.setValue("", forKey: SettingKeys.pageNumber)
+        self.navigationController?.setViewControllers([LogInViewController()], animated: true)
     }
 }
 
@@ -270,7 +299,7 @@ extension ProductListViewController: ProductListDisplayLogic {
                 UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
                     view.isHidden = false
                 })
-                view.setTitle("\(errorMessage)\npress to update", for: .normal)
+                view.setTitle("\(errorMessage)\nНажмите, чтоб обновить", for: .normal)
                 view.titleLabel?.textAlignment = .center
                 view.sizeToFit()
             }

@@ -41,7 +41,7 @@ final class SettingsViewController: UIViewController {
 
     private func setSheetsLabel() {
         sheetLink.isScrollEnabled = false
-        sheetLink.font = .systemFont(ofSize: 22, weight: .medium)
+        sheetLink.font = .systemFont(ofSize: 18, weight: .medium)
         if let shetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
             sheetLink.text = "https://docs.google.com/spreadsheets/d/" + shetsId
         } else {
@@ -54,7 +54,6 @@ final class SettingsViewController: UIViewController {
         view.addSubview(sheetLink)
         sheetLink.pin(to: view, [.left: 18, .right: 18])
         sheetLink.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 40)
-        sheetLink.setHeight(to: 45)
         sheetLink.delegate = self
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
         view.addGestureRecognizer(tap)
@@ -142,7 +141,6 @@ final class SettingsViewController: UIViewController {
 
     @objc
     func sendMessage(sender: UIButton!) {
-        // TODO: - Check incorrect input
         if sheetLink.text.isEmpty {
             return
         }

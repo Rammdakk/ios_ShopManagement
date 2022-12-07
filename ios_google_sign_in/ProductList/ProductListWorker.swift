@@ -24,12 +24,14 @@ class ProductListWorker: ProductListWorkerLogic {
                 completion(.failure(Error.noAccessToken))
                 return
             }
-            let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) ??
-                    "1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA"
             let range = "A2:E100"
-            guard let url =
-            URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
+            guard let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID),
+                  let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
             else {
+                completion(.failure(Error.badURL))
+                return
+            }
+            if (sheetID.count < 5) {
                 completion(.failure(Error.badURL))
                 return
             }
@@ -42,7 +44,8 @@ class ProductListWorker: ProductListWorkerLogic {
                             completion(.failure(Error.network(error)))
                         }
                         if (response as? HTTPURLResponse)?.statusCode != 200 {
-                            completion(.failure(Error.network(NSError(domain: "", code: (response as? HTTPURLResponse)?.statusCode ?? 404, userInfo: nil))))
+                            completion(.failure(Error.network(NSError(domain: "",
+                                                                      code: (response as? HTTPURLResponse)?.statusCode ?? 404, userInfo: nil))))
                             return
                         }
                         guard let data = data else {
