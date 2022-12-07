@@ -42,8 +42,8 @@ final class SettingsViewController: UIViewController {
     private func setSheetsLabel() {
         sheetLink.isScrollEnabled = false
         sheetLink.font = .systemFont(ofSize: 18, weight: .medium)
-        if let shetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
-            sheetLink.text = "https://docs.google.com/spreadsheets/d/" + shetsId
+        if let sheetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
+            sheetLink.text = "https://docs.google.com/spreadsheets/d/" + sheetsId
         } else {
             sheetLink.text = " Ссылка на таблицу"
         }

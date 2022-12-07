@@ -11,8 +11,6 @@
 		2E1268D467B60C3C1799E850 /* ProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */; };
 		2E126A04A3546E69ECDBB4B5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E126CDE50977473E0E22243 /* SettingsViewController.swift */; };
 		2E126E973024778B2BF3701B /* FileManagerGetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1263EFC685A2DF3A7CDB86 /* FileManagerGetImage.swift */; };
-		A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A862913DB3800B84056 /* KeychainHelper.swift */; };
-		A8176A892913DDEA00B84056 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8176A882913DDEA00B84056 /* Auth.swift */; };
 		A81FE3E3293F4C8A00071EF8 /* google.png in Resources */ = {isa = PBXBuildFile; fileRef = A81FE3E2293F4A5C00071EF8 /* google.png */; };
 		A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */; };
 		A86E4BF329100CFD00D925AC /* ProductListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86E4BE929100CFD00D925AC /* ProductListAssembly.swift */; };
@@ -41,8 +39,6 @@
 		2E12686175AE7CFE2F816BA1 /* Filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Filter.png; path = Images.bundle/Filter.png; sourceTree = "<group>"; };
 		2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoViewController.swift; sourceTree = "<group>"; };
 		2E126CDE50977473E0E22243 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		A8176A862913DB3800B84056 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
-		A8176A882913DDEA00B84056 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		A81FE3E2293F4A5C00071EF8 /* google.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google.png; sourceTree = "<group>"; };
 		A86E4BE829100CFD00D925AC /* ProductListBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListBusinessLogic.swift; sourceTree = "<group>"; };
 		A86E4BE929100CFD00D925AC /* ProductListAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListAssembly.swift; sourceTree = "<group>"; };
@@ -79,15 +75,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A8176A852913DB1100B84056 /* KeyChainSaving */ = {
-			isa = PBXGroup;
-			children = (
-				A8176A862913DB3800B84056 /* KeychainHelper.swift */,
-				A8176A882913DDEA00B84056 /* Auth.swift */,
-			);
-			path = KeyChainSaving;
-			sourceTree = "<group>";
-		};
 		A86E4BE729100CFD00D925AC /* ProductList */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,7 +142,6 @@
 				A8AE84E02937B3750065DB53 /* Setting */,
 				A8AE84DF2937B35A0065DB53 /* ProductInfo */,
 				A87B445D291ECB9300584FA3 /* LogIn */,
-				A8176A852913DB1100B84056 /* KeyChainSaving */,
 				A86E4BE729100CFD00D925AC /* ProductList */,
 				A8FE822F2909C2D4004784A6 /* GoogleService-Info.plist */,
 				A8FE82182909BDF8004784A6 /* AppDelegate.swift */,
@@ -284,7 +270,6 @@
 				A8E6446A2941087E00FC9E64 /* ArraySafeGet.swift in Sources */,
 				A86E4BF329100CFD00D925AC /* ProductListAssembly.swift in Sources */,
 				A86E4BF229100CFD00D925AC /* ProductListBusinessLogic.swift in Sources */,
-				A8176A892913DDEA00B84056 /* Auth.swift in Sources */,
 				A86E4BF729100CFD00D925AC /* ProductViewModel.swift in Sources */,
 				A8FE82192909BDF8004784A6 /* AppDelegate.swift in Sources */,
 				A8FE82412909D543004784A6 /* UIViewPin.swift in Sources */,
@@ -292,7 +277,6 @@
 				A86E4BF929100CFD00D925AC /* ProductListPresentationLogic.swift in Sources */,
 				A8AE84E32937C0B70065DB53 /* SettingUserDefaults.swift in Sources */,
 				A86E4BF829100CFD00D925AC /* ProductListWorker.swift in Sources */,
-				A8176A872913DB3800B84056 /* KeychainHelper.swift in Sources */,
 				A8FE821B2909BDF8004784A6 /* SceneDelegate.swift in Sources */,
 				A8AE84E529380C5D0065DB53 /* StringSubstring.swift in Sources */,
 				2E1268D467B60C3C1799E850 /* ProductInfoViewController.swift in Sources */,

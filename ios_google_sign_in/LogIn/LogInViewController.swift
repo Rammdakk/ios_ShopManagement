@@ -30,16 +30,8 @@ class LogInViewController: UIViewController {
                 print(error)
                 return
             }
-            guard let accessToken = user?.authentication.accessToken,
-                  let refreshToken = user?.authentication.refreshToken
-            else {
-                return
-            }
-            let auth = Auth(accessToken: accessToken, refreshToken: refreshToken)
-            KeychainHelper.standard.save(auth, service: service, account: account)
             let viewController = ProductListAssembly.build()
             self.navigationController?.setViewControllers([viewController], animated: true)
-//            self.navigationController?.present(viewController, animated: true)
         }
     }
 
