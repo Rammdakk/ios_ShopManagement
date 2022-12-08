@@ -4,7 +4,15 @@
 
 import UIKit
 
+protocol SettingsDisplayLogic: AnyObject {
+    typealias Model = ProductListResponceModel
+    func displayData(_ viewModel: [String])
+    func displayError(_ errorMessage: String)
+}
+
 final class SettingsViewController: UIViewController {
+    // MARK: - Internal vars
+    private var interactor: SettingBusinessLogic
     private var sheetLink = UITextView()
     private var pageNumberTitle = UITextView()
     private var pageNumberText = UITextView()
@@ -12,6 +20,17 @@ final class SettingsViewController: UIViewController {
     private var increaseButton = UIButton()
     private var sendButton = UIButton()
     private var pageNumber: Int = UserDefaults.standard.integer(forKey: SettingKeys.pageNumber)
+
+    // MARK: - Init
+    init(interactor: SettingBusinessLogic) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,6 +122,7 @@ final class SettingsViewController: UIViewController {
         decreaseButton.clipsToBounds = true
         decreaseButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         decreaseButton.addTarget(self, action: #selector(decrease), for: .touchUpInside)
+        sendButton.isHidden = true
     }
 
     private func setUpSendButton() {
@@ -118,6 +138,15 @@ final class SettingsViewController: UIViewController {
         sendButton.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
     }
 
+    private func checkLink() {
+        interactor.fetchNews(sheetID: parseInput(input: sheetLink.text))
+    }
+
+    private func parseInput(input: String) -> String {
+        let str = input.substring(start: input.findEndPos(search: "/d/") ?? String.Index(utf16Offset: 0, in: input))
+        return str.substring(end: str.findStartPos(search: "/") ?? String.Index(utf16Offset: str.count, in: str))
+    }
+
     // MARK: - Objc functions
 
     @objc
@@ -128,7 +157,7 @@ final class SettingsViewController: UIViewController {
 
     @objc
     func decrease() {
-        if pageNumber>0 {
+        if pageNumber > 0 {
             pageNumber -= 1
             pageNumberText.text = String(pageNumber)
         }
@@ -153,12 +182,9 @@ final class SettingsViewController: UIViewController {
     func dismiss(gesture: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-
-    func parseInput(input: String) -> String {
-        let str = input.substring(start: input.findEndPos(search: "/d/") ?? String.Index(utf16Offset: 0, in: input))
-        return str.substring(end: str.findStartPos(search: "/") ?? String.Index(utf16Offset: str.count, in: str))
-    }
 }
+
+// MARK: - UITextViewDelegate
 
 extension SettingsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -172,6 +198,23 @@ extension SettingsViewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = "Ссылка на таблицу"
             textView.textColor = UIColor.lightGray
+        } else{
+            checkLink()
         }
+    }
+}
+
+// MARK: - SettingsListDisplayLogic
+
+extension SettingsViewController: SettingsDisplayLogic{
+    func displayData(_ viewModel: [String]){
+        print(viewModel)
+        DispatchQueue.main.async { [weak self] in
+            self?.sendButton.isHidden = false
+        }
+
+    }
+    func displayError(_ errorMessage: String) {
+        print(errorMessage)
     }
 }

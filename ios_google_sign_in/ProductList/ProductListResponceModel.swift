@@ -38,4 +38,5 @@ public enum Error: Swift.Error {
     case emptyData
     case noAccessToken
     case network(Swift.Error)
+    
 }

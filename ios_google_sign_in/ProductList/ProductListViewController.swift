@@ -183,7 +183,8 @@ class ProductListViewController: UIViewController {
 
     @objc
     private func goToSetting() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        let viewController = SettingsAssembly.build()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc
