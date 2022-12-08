@@ -2,7 +2,7 @@
 // Created by Рамиль Зиганшин on 24.10.2022.
 //
 
-enum NewsFeedModel {
+enum ProductListResponceModel {
     enum GetNews {
         struct Request {
         }

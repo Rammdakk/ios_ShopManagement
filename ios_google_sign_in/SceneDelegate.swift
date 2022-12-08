@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.window = window
                 window.makeKeyAndVisible()
             } else {
-                let viewController = NewsFeedAssembly.build()
+                let viewController = ProductListAssembly.build()
                 let navigationController =
                         UINavigationController(rootViewController:
                         viewController)

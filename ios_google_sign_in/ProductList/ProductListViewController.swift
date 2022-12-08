@@ -8,27 +8,27 @@
 import UIKit
 import GoogleSignIn
 
-protocol NewsFeedDisplayLogic: AnyObject {
-    typealias Model = NewsFeedModel
-    func displayData(_ viewModel: [NewsViewModel])
+protocol ProductListDisplayLogic: AnyObject {
+    typealias Model = ProductListResponceModel
+    func displayData(_ viewModel: [ProductViewMode])
 }
 
-class ItemsTableViewController: UIViewController {
-
-    // MARK: - External vars
+class ProductListViewController: UIViewController {
 
     // MARK: - Internal vars
-    private var interactor: NewsFeedBusinessLogic
+    private var interactor: ProductListBusinessLogic
     private var tableView: UICollectionView =
             UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
     private var isLoading = false
-    private var newsViewModels = [NewsViewModel]()
+    private var productsViewModels = [ProductViewMode]()
+    private var filteredItems = [ProductViewMode]()
+    private var settingsButton = UIButton()
 
     // MARK: - Lifecycle
 
-    init(interactor: NewsFeedBusinessLogic) {
+    init(interactor: ProductListBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,14 +50,40 @@ class ItemsTableViewController: UIViewController {
         view.backgroundColor = .systemBackground
         configureTableView()
         setUpSearch()
+        setUpButton()
+    }
+
+    private func setUpButton() {
+        let fileManager = FileManager.default
+        settingsButton.setImage(fileManager.getImageInBundle(bundlePath: "Filter.png"), for: .normal)
+        view.addSubview(settingsButton)
+        settingsButton.contentHorizontalAlignment = .fill
+        settingsButton.contentVerticalAlignment = .fill
+        settingsButton.imageView?.contentMode = .scaleAspectFit
+        settingsButton.pinBottom(to: searchBar.bottomAnchor)
+        settingsButton.pinLeft(to: searchBar.trailingAnchor, 4)
+        settingsButton.pinTop(to: searchBar.topAnchor)
+        settingsButton.pinRight(to: view, 8)
+        settingsButton.addTarget(self, action: #selector(goToSetting), for: .touchUpInside)
     }
 
     private func setUpSearch() {
-        view.addSubview(searchController.searchBar)
-//        searchController.searchBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 10)
-        searchController.searchBar.pinBottom(to: tableView.topAnchor, 10)
-        searchController.searchBar.pinLeft(to: view, 8)
-        searchController.searchBar.pinRight(to: view, 40)
+        searchBar.delegate = self
+        view.addSubview(searchBar)
+        searchBar.pinBottom(to: tableView.topAnchor, 10)
+        searchBar.pinLeft(to: view, 8)
+        searchBar.pinRight(to: view, 67)
+        searchBar.enablesReturnKeyAutomatically = false
+        searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.layer.borderWidth = 1.0
+        searchBar.layer.cornerRadius = 8
+        searchBar.layer.borderColor = UIColor.lightGray.cgColor
+    }
+
+    @objc
+    func dismiss(gesture: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 
     private func configureTableView() {
@@ -88,7 +114,7 @@ class ItemsTableViewController: UIViewController {
     }
 
     private func setTableViewCell() {
-        tableView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseIdentifier)
+        tableView.register(ProductListCell.self, forCellWithReuseIdentifier: ProductListCell.reuseIdentifier)
     }
 
     private func reloadData() {
@@ -106,6 +132,11 @@ class ItemsTableViewController: UIViewController {
     // MARK: - Button action
 
     @objc
+    private func goToSetting() {
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
+    }
+
+    @objc
     private func updateData() {
         refreshControl.endRefreshing()
         loadDataFromSheets()
@@ -119,7 +150,7 @@ class ItemsTableViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension ItemsTableViewController: UICollectionViewDataSource {
+extension ProductListViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
@@ -128,16 +159,17 @@ extension ItemsTableViewController: UICollectionViewDataSource {
         if isLoading {
             return 0
         } else {
-            return newsViewModels.count
+            return filteredItems.count
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
             -> UICollectionViewCell {
 
-        let viewModel = newsViewModels[indexPath.row]
-        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseIdentifier, for: indexPath)
-                as? NewsCell {
+        let viewModel = productsViewModels[indexPath.row]
+        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier,
+                for: indexPath)
+                as? ProductListCell {
             newsCell.configure(with: viewModel)
             return newsCell
         }
@@ -148,17 +180,17 @@ extension ItemsTableViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension ItemsTableViewController: UICollectionViewDelegate {
+extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isLoading {
-            let newsVC = NewsViewController()
-            newsVC.setData(viewModel: newsViewModels[indexPath.row])
+            let newsVC = ProductInfoViewController()
+            newsVC.setData(viewModel: filteredItems[indexPath.row])
             navigationController?.pushViewController(newsVC, animated: true)
         }
     }
 }
 
-extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
+extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = ((collectionViewLayout.collectionView?.frame.width ?? 200) - 10) / 2
@@ -167,11 +199,32 @@ extension ItemsTableViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - SearchBarDelegate
+
+extension ProductListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            filteredItems = productsViewModels
+        } else {
+            filteredItems = productsViewModels.filter({ (data) -> Bool in
+                let tmp = data.title
+                return tmp.lowercased().contains(searchText.lowercased())
+            })
+        }
+        reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+}
+
 // MARK: - Display Logic
 
-extension ItemsTableViewController: NewsFeedDisplayLogic {
-    func displayData(_ viewModel: [NewsViewModel]) {
-        newsViewModels = viewModel
+extension ProductListViewController: ProductListDisplayLogic {
+    func displayData(_ viewModel: [ProductViewMode]) {
+        productsViewModels = viewModel
+        filteredItems = productsViewModels
         reloadData()
     }
 }
