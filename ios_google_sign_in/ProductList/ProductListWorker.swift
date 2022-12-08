@@ -26,7 +26,8 @@ class ProductListWorker: ProductListWorkerLogic {
             }
             let range = "A2:E100"
             guard let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID),
-                  let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(range)")
+                  let page: String = UserDefaults.standard.string(forKey: SettingKeys.pageNumber),
+                  let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(page)!\(range)".encodeUrl)
             else {
                 completion(.failure(Error.badURL))
                 return

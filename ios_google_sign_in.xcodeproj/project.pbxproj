@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E12623E59A10DE0185325FB /* Filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E12686175AE7CFE2F816BA1 /* Filter.png */; };
+		2E1267DEB30B33AEA690F9EB /* StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1262735EC5D1F592AA4BED /* StringEncoding.swift */; };
 		2E1268D467B60C3C1799E850 /* ProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */; };
 		2E126A04A3546E69ECDBB4B5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E126CDE50977473E0E22243 /* SettingsViewController.swift */; };
 		2E126E973024778B2BF3701B /* FileManagerGetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1263EFC685A2DF3A7CDB86 /* FileManagerGetImage.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E1262735EC5D1F592AA4BED /* StringEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringEncoding.swift; sourceTree = "<group>"; };
 		2E1263EFC685A2DF3A7CDB86 /* FileManagerGetImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerGetImage.swift; sourceTree = "<group>"; };
 		2E12686175AE7CFE2F816BA1 /* Filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Filter.png; path = Images.bundle/Filter.png; sourceTree = "<group>"; };
 		2E126CAC75E231117C80BE77 /* ProductInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				2E1263EFC685A2DF3A7CDB86 /* FileManagerGetImage.swift */,
 				A8AE84E429380C5D0065DB53 /* StringSubstring.swift */,
 				A8E644692941087E00FC9E64 /* ArraySafeGet.swift */,
+				2E1262735EC5D1F592AA4BED /* StringEncoding.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				2E1268D467B60C3C1799E850 /* ProductInfoViewController.swift in Sources */,
 				2E126A04A3546E69ECDBB4B5 /* SettingsViewController.swift in Sources */,
 				2E126E973024778B2BF3701B /* FileManagerGetImage.swift in Sources */,
+				2E1267DEB30B33AEA690F9EB /* StringEncoding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
