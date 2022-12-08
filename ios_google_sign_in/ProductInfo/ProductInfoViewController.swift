@@ -75,15 +75,19 @@ final class ProductInfoViewController: UIViewController {
     }
 
 // MARK: - Configure
-    func setData(viewModel: ProductViewMode) {
+    func setData(viewModel: ProductViewModel) {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         descriptionLabel.isEditable = false
         phoneNumberField.text = "+7"
-        messageTextView.text = """
-                               Спасибо за покупку \(viewModel.title)!\n
-                               🧾Чек можно скачать тут: \(viewModel.invoiceLink)\nЖдем Вас снова!\n
-                               """
+        if viewModel.invoiceLink.isEmpty {
+            messageTextView.text = "Спасибо за покупку \(viewModel.title)!\nЖдем Вас снова!"
+        } else {
+            messageTextView.text = """
+                                   Спасибо за покупку \(viewModel.title)!\n
+                                   🧾Чек можно скачать тут: \(link)\nЖдем Вас снова!
+                                   """
+        }
         if let data = viewModel.imageData {
             imageView.image = UIImage(data: data)
         }

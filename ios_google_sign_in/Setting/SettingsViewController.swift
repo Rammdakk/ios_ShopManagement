@@ -41,11 +41,11 @@ final class SettingsViewController: UIViewController {
 
     private func setSheetsLabel() {
         sheetLink.isScrollEnabled = false
-        sheetLink.font = .systemFont(ofSize: 22, weight: .medium)
-        if let shetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
-            sheetLink.text = "https://docs.google.com/spreadsheets/d/" + shetsId
+        sheetLink.font = .systemFont(ofSize: 18, weight: .medium)
+        if let sheetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
+            sheetLink.text = "https://docs.google.com/spreadsheets/d/" + sheetsId
         } else {
-            sheetLink.text = "Ссылка на таблицу"
+            sheetLink.text = " Ссылка на таблицу"
         }
         sheetLink.textColor = UIColor.lightGray
         sheetLink.layer.borderWidth = 1.0
@@ -54,7 +54,6 @@ final class SettingsViewController: UIViewController {
         view.addSubview(sheetLink)
         sheetLink.pin(to: view, [.left: 18, .right: 18])
         sheetLink.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 40)
-        sheetLink.setHeight(to: 45)
         sheetLink.delegate = self
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
         view.addGestureRecognizer(tap)
@@ -79,6 +78,7 @@ final class SettingsViewController: UIViewController {
         increaseButton.layer.cornerRadius = 8
         increaseButton.clipsToBounds = true
         increaseButton.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        increaseButton.addTarget(self, action: #selector(increase), for: .touchUpInside)
 
         pageNumberText.isScrollEnabled = false
         pageNumberText.font = .systemFont(ofSize: 16, weight: .medium)
@@ -102,6 +102,7 @@ final class SettingsViewController: UIViewController {
         decreaseButton.layer.cornerRadius = 8
         decreaseButton.clipsToBounds = true
         decreaseButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        decreaseButton.addTarget(self, action: #selector(decrease), for: .touchUpInside)
     }
 
     private func setUpSendButton() {
@@ -110,7 +111,7 @@ final class SettingsViewController: UIViewController {
         sendButton.setTitleColor(.systemBackground, for: .normal)
         view.addSubview(sendButton)
         sendButton.pin(to: view, [.left: 18, .right: 18])
-        sendButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 0)
+        sendButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 10)
         sendButton.layer.cornerRadius = 8
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.setHeight(to: 45)
@@ -126,9 +127,11 @@ final class SettingsViewController: UIViewController {
     }
 
     @objc
-    func decreas() {
-        pageNumber -= 1
-        pageNumberText.text = String(pageNumber)
+    func decrease() {
+        if pageNumber>0 {
+            pageNumber -= 1
+            pageNumberText.text = String(pageNumber)
+        }
     }
 
     @objc
@@ -138,7 +141,6 @@ final class SettingsViewController: UIViewController {
 
     @objc
     func sendMessage(sender: UIButton!) {
-        // TODO: - Check incorrect input
         if sheetLink.text.isEmpty {
             return
         }

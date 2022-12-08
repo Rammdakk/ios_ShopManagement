@@ -89,16 +89,20 @@ final class ProductListCell: UICollectionViewCell {
         -8).isActive = true
     }
 
-    func configure(with news: ProductViewMode) {
+    func configure(with news: ProductViewModel) {
         productTitle.text = news.title + "\n"
         descriptionLabel.text = news.description.replacingOccurrences(of: "\n", with: " ")
-        priceLabel.text = "$" + news.price
+        if news.price.isEmpty {
+            priceLabel.text = "Цена не указана"
+        } else {
+            priceLabel.text = "$" + news.price
+        }
         if let url = news.imageURL {
             setImage(from: url, news: news)
         }
     }
 
-    func setImage(from url: URL, news: ProductViewMode) {
+    func setImage(from url: URL, news: ProductViewModel) {
         print(url)
         if let data = news.imageData {
             DispatchQueue.main.async {
