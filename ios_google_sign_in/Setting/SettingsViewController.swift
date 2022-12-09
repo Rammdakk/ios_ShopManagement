@@ -88,8 +88,13 @@ final class SettingsViewController: UIViewController {
         sheetLink.isScrollEnabled = false
         sheetLink.font = .systemFont(ofSize: 18, weight: .medium)
         if let sheetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
-            sheetLink.text = "https://docs.google.com/spreadsheets/d/" + sheetsId
-            sheetLink.textColor = UIColor.black
+            if (sheetsId.isEmpty) {
+                sheetLink.text = " Ссылка на таблицу"
+                sheetLink.textColor = UIColor.lightGray
+            } else {
+                sheetLink.text = "https://docs.google.com/spreadsheets/d/" + sheetsId
+                sheetLink.textColor = UIColor.black
+            }
         } else {
             sheetLink.text = " Ссылка на таблицу"
             sheetLink.textColor = UIColor.lightGray
