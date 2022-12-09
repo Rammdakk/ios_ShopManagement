@@ -7,7 +7,7 @@ import GoogleSignIn
 
 protocol ProductListWorkerLogic {
     typealias Model = ProductListResponceModel
-    func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request,
+    func getProductsWithRefreshingTokens(_ request: Model.GetData.Request,
                                          completion: @escaping (Result<Model.ItemsList, Error>) -> Void)
     func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
 }
@@ -16,7 +16,7 @@ class ProductListWorker: ProductListWorkerLogic {
     private let decoder: JSONDecoder = JSONDecoder()
     private let session: URLSession = URLSession.shared
 
-    func getProductsWithRefreshingTokens(_ request: Model.GetNews.Request,
+    func getProductsWithRefreshingTokens(_ request: Model.GetData.Request,
                                          completion: @escaping (Result<Model.ItemsList, Error>) -> Void) {
         let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
         authentication?.do { auth, _ in

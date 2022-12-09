@@ -85,7 +85,7 @@ final class ProductInfoViewController: UIViewController {
         } else {
             messageTextView.text = """
                                    Спасибо за покупку \(viewModel.title)!\n
-                                   🧾Чек можно скачать тут: \(link)\nЖдем Вас снова!
+                                   🧾Чек можно скачать тут: \(viewModel.invoiceLink)\nЖдем Вас снова!
                                    """
         }
         if let data = viewModel.imageData {

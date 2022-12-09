@@ -151,7 +151,7 @@ final class SettingsViewController: UIViewController {
     @objc
     private func checkLink() {
         errorButton.isHidden = true
-        interactor.fetchNews(sheetID: parseInput(input: sheetLink.text))
+        interactor.fetchSheetsList(sheetID: parseInput(input: sheetLink.text))
     }
 
     @objc

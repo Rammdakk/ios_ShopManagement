@@ -9,7 +9,7 @@ import UIKit
 
 protocol SettingBusinessLogic {
     typealias Model = ProductListResponceModel
-    func fetchNews(sheetID: String)
+    func fetchSheetsList(sheetID: String)
 }
 
 class SettingInteractor {
@@ -30,7 +30,7 @@ class SettingInteractor {
 // MARK: - Business logic
 
 extension SettingInteractor: SettingBusinessLogic {
-    func fetchNews(sheetID: String) {
+    func fetchSheetsList(sheetID: String) {
         worker.getSheets(sheetID: sheetID) { [weak self] result in
             switch result {
             case .success(let items):

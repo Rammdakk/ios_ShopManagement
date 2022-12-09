@@ -3,7 +3,7 @@
 //
 
 enum ProductListResponceModel {
-    enum GetNews {
+    enum GetData {
         struct Request {
         }
 
@@ -12,7 +12,7 @@ enum ProductListResponceModel {
         }
     }
 
-    // MARK: - News
+    // MARK: - Product
 
     struct ItemsList: Decodable {
         let values: [[String]]?
