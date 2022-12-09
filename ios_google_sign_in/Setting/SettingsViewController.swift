@@ -195,6 +195,8 @@ extension SettingsViewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = "Ссылка на таблицу"
             textView.textColor = UIColor.lightGray
+            data = []
+            sheetPageName.text = ""
             sendButton.isHidden = true
         } else {
             checkLink()
@@ -230,6 +232,7 @@ extension SettingsViewController: SettingsDisplayLogic {
                 view.sizeToFit()
             }
             self?.data = []
+            self?.sheetPageName.text = ""
             self?.sendButton.isHidden = true
         }
     }
