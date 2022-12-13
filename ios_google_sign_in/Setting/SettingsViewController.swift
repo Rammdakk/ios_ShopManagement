@@ -88,7 +88,7 @@ final class SettingsViewController: UIViewController {
         sheetLink.isScrollEnabled = false
         sheetLink.font = .systemFont(ofSize: 18, weight: .medium)
         if let sheetsId = UserDefaults.standard.string(forKey: SettingKeys.sheetsID) {
-            if (sheetsId.isEmpty) {
+            if sheetsId.isEmpty {
                 sheetLink.text = " Ссылка на таблицу"
                 sheetLink.textColor = UIColor.lightGray
             } else {
@@ -185,6 +185,8 @@ final class SettingsViewController: UIViewController {
 extension SettingsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         sendButton.isHidden = true
+        sheetPageName.isHidden = true
+        pageNumberTitle.isHidden = true
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
@@ -198,6 +200,9 @@ extension SettingsViewController: UITextViewDelegate {
             data = []
             sheetPageName.text = ""
             sendButton.isHidden = true
+            sendButton.isHidden = true
+            sheetPageName.isHidden = true
+            pageNumberTitle.isHidden = true
         } else {
             checkLink()
         }
@@ -216,6 +221,8 @@ extension SettingsViewController: SettingsDisplayLogic {
             } else {
                 self?.sheetPageName.text = self?.data[0]
             }
+            self?.sheetPageName.isHidden = false
+            self?.pageNumberTitle.isHidden = false
             self?.sendButton.isHidden = false
         }
     }

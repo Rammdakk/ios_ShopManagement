@@ -103,7 +103,6 @@ final class ProductListCell: UICollectionViewCell {
     }
 
     func setImage(from url: URL, product: ProductViewModel) {
-        print(url)
         if let data = product.imageData {
             DispatchQueue.main.async {
                 self.productImageView.image = UIImage(data: data)
