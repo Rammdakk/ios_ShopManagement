@@ -1,33 +1,31 @@
 //
-// Created by Рамиль Зиганшин on 24.10.2022.
+//  SettingsWorker.swift
+//  ios_google_sign_in
+//
+//  Created by Рамиль Зиганшин on 08.12.2022.
 //
 
 import UIKit
 import GoogleSignIn
 
-protocol ProductListWorkerLogic {
-    typealias Model = ProductListResponceModel
-    func getProductsWithRefreshingTokens(_ request: Model.GetData.Request,
-                                         completion: @escaping (Result<Model.ItemsList, Error>) -> Void)
-    func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void)
+protocol SettingWorkerLogic {
+    func getSheets(sheetID: String,
+                   completion: @escaping (Result<Sheet, Error>) -> Void)
 }
 
-class ProductListWorker: ProductListWorkerLogic {
+class SettingWorker: SettingWorkerLogic {
     private let decoder: JSONDecoder = JSONDecoder()
     private let session: URLSession = URLSession.shared
 
-    func getProductsWithRefreshingTokens(_ request: Model.GetData.Request,
-                                         completion: @escaping (Result<Model.ItemsList, Error>) -> Void) {
+    func getSheets(sheetID: String,
+                   completion: @escaping (Result<Sheet, Error>) -> Void) {
         let authentication = GIDSignIn.sharedInstance.currentUser?.authentication
         authentication?.do { auth, _ in
             guard let accessToken = auth?.accessToken else {
                 completion(.failure(Error.noAccessToken))
                 return
             }
-            let range = "A2:E100"
-            guard let sheetID: String = UserDefaults.standard.string(forKey: SettingKeys.sheetsID),
-                  let page: String = UserDefaults.standard.string(forKey: SettingKeys.pageNumber),
-                  let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)/values/\(page)!\(range)".encodeUrl)
+            guard let url = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/\(sheetID)")
             else {
                 completion(.failure(Error.badURL))
                 return
@@ -45,6 +43,8 @@ class ProductListWorker: ProductListWorkerLogic {
                             completion(.failure(Error.network(error)))
                         }
                         if (response as? HTTPURLResponse)?.statusCode != 200 {
+                            print((response as? HTTPURLResponse)?.statusCode)
+                            print(response)
                             completion(.failure(Error.network(NSError(domain: "",
                                                                       code: (response as? HTTPURLResponse)?.statusCode ?? 404, userInfo: nil))))
                             return
@@ -53,8 +53,14 @@ class ProductListWorker: ProductListWorkerLogic {
                             completion(.failure(Error.emptyData))
                             return
                         }
-                        if let items = try? self?.decoder.decode(Model.ItemsList.self, from: data) {
-                            completion(.success(items))
+                        if let items = try? self?.decoder.decode(Sheet.self, from: data) {
+                            if !items.sheets.isEmpty {
+                                completion(.success(items))
+                                return
+                            } else {
+                                completion(.failure(Error.emptyData))
+                                return
+                            }
                         } else {
                             completion(.failure(Error.decoding))
                         }
@@ -62,20 +68,5 @@ class ProductListWorker: ProductListWorkerLogic {
                     .resume()
         }
     }
-
-    func loadImage(from urlString: String, completion: @escaping (_ data: Data?) -> Void) {
-        let session = URLSession.shared
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        let dataTask = session.dataTask(with: url) { (data, _, _) in
-            if let data = data {
-                completion(data)
-            } else {
-                print("Could not load image")
-            }
-        }
-        dataTask.resume()
-    }
-
 }
+

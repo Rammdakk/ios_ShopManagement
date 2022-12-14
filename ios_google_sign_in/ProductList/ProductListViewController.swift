@@ -176,14 +176,15 @@ class ProductListViewController: UIViewController {
 
     private func loadDataFromSheets() {
         isLoading = true
-        interactor.fetchNews(Model.GetNews.Request())
+        interactor.fetchData(Model.GetData.Request())
     }
 
     // MARK: - Button action
 
     @objc
     private func goToSetting() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        let viewController = SettingsAssembly.build()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc
@@ -221,11 +222,11 @@ extension ProductListViewController: UICollectionViewDataSource {
             -> UICollectionViewCell {
 
         let viewModel = productsViewModels[indexPath.row]
-        if let newsCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier,
+        if let productCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier,
                 for: indexPath)
                 as? ProductListCell {
-            newsCell.configure(with: viewModel)
-            return newsCell
+            productCell.configure(with: viewModel)
+            return productCell
         }
 
         return UICollectionViewCell()
@@ -237,9 +238,9 @@ extension ProductListViewController: UICollectionViewDataSource {
 extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isLoading {
-            let newsVC = ProductInfoViewController()
-            newsVC.setData(viewModel: filteredItems[indexPath.row])
-            navigationController?.pushViewController(newsVC, animated: true)
+            let productInfoVC = ProductInfoViewController()
+            productInfoVC.setData(viewModel: filteredItems[indexPath.row])
+            navigationController?.pushViewController(productInfoVC, animated: true)
         }
     }
 }

@@ -5,7 +5,7 @@
 import UIKit
 
 final class ProductListCell: UICollectionViewCell {
-    static let reuseIdentifier = "NewsCell"
+    static let reuseIdentifier = "ProductCell"
     private let productImageView = UIImageView()
     private let productTitle = UILabel()
     private let descriptionLabel = UILabel()
@@ -89,22 +89,21 @@ final class ProductListCell: UICollectionViewCell {
         -8).isActive = true
     }
 
-    func configure(with news: ProductViewModel) {
-        productTitle.text = news.title + "\n"
-        descriptionLabel.text = news.description.replacingOccurrences(of: "\n", with: " ")
-        if news.price.isEmpty {
+    func configure(with product: ProductViewModel) {
+        productTitle.text = product.title + "\n"
+        descriptionLabel.text = product.description.replacingOccurrences(of: "\n", with: " ")
+        if product.price.isEmpty {
             priceLabel.text = "Цена не указана"
         } else {
-            priceLabel.text = "$" + news.price
+            priceLabel.text = "$" + product.price
         }
-        if let url = news.imageURL {
-            setImage(from: url, news: news)
+        if let url = product.imageURL {
+            setImage(from: url, product: product)
         }
     }
 
-    func setImage(from url: URL, news: ProductViewModel) {
-        print(url)
-        if let data = news.imageData {
+    func setImage(from url: URL, product: ProductViewModel) {
+        if let data = product.imageData {
             DispatchQueue.main.async {
                 self.productImageView.image = UIImage(data: data)
             }
@@ -113,7 +112,7 @@ final class ProductListCell: UICollectionViewCell {
                 guard let imageData = try? Data(contentsOf: url) else {
                     return
                 }
-                news.imageData = imageData
+                product.imageData = imageData
                 let image = UIImage(data: imageData)
                 DispatchQueue.main.async {
                     self.productImageView.image = image

@@ -1,25 +1,25 @@
 //
-// ProductListBusinessLogicAndInteractor.swift
-//  riziganshinPW5
+//  SettingsBusinessLogic.swift
+//  ios_google_sign_in
 //
-//  Created by Рамиль Зиганшин on 20.10.2022.
+//  Created by Рамиль Зиганшин on 08.12.2022.
 //
 
 import UIKit
 
-protocol ProductListBusinessLogic {
+protocol SettingBusinessLogic {
     typealias Model = ProductListResponceModel
-    func fetchData(_ request: Model.GetData.Request)
+    func fetchSheetsList(sheetID: String)
 }
 
-class ProductListInteractor {
+class SettingInteractor {
     // MARK: - External vars
-    private let presenter: ProductListPresentationLogic
-    private let worker: ProductListWorkerLogic
+    private let presenter: SettingPresentationLogic
+    private let worker: SettingWorkerLogic
 
     init(
-            presenter: ProductListPresentationLogic,
-            worker: ProductListWorkerLogic
+            presenter: SettingPresentationLogic,
+            worker: SettingWorkerLogic
     ) {
         self.presenter = presenter
         self.worker = worker
@@ -29,13 +29,13 @@ class ProductListInteractor {
 
 // MARK: - Business logic
 
-extension ProductListInteractor: ProductListBusinessLogic {
-    func fetchData(_ request: Model.GetData.Request) {
-        worker.getProductsWithRefreshingTokens(request) { [weak self] result in
+extension SettingInteractor: SettingBusinessLogic {
+    func fetchSheetsList(sheetID: String) {
+        worker.getSheets(sheetID: sheetID) { [weak self] result in
             switch result {
             case .success(let items):
                 print("success")
-                self?.presenter.presentData(Model.GetData.Response(values: items))
+                self?.presenter.presentData(items)
             case .failure(let err):
                 print("failure")
                 switch err {
