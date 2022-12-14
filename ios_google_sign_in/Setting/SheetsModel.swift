@@ -30,6 +30,3 @@ struct SheetElement: Codable {
 struct Properties: Codable {
     let title: String
 }
-
-
-

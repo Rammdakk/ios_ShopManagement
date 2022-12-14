@@ -32,7 +32,7 @@ class ProductListWorker: ProductListWorkerLogic {
                 completion(.failure(Error.badURL))
                 return
             }
-            if (sheetID.count < 5) {
+            if sheetID.count < 5 {
                 completion(.failure(Error.badURL))
                 return
             }
@@ -46,7 +46,7 @@ class ProductListWorker: ProductListWorkerLogic {
                         }
                         if (response as? HTTPURLResponse)?.statusCode != 200 {
                             completion(.failure(Error.network(NSError(domain: "",
-                                                                      code: (response as? HTTPURLResponse)?.statusCode ?? 404, userInfo: nil))))
+                                    code: (response as? HTTPURLResponse)?.statusCode ?? 404, userInfo: nil))))
                             return
                         }
                         guard let data = data else {

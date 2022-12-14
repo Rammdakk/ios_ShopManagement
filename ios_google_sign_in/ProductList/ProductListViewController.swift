@@ -60,11 +60,13 @@ class ProductListViewController: UIViewController {
         configureTableView()
         setUpSearch()
         setUpButton()
+        setUpGreetings()
         setUpErrorHandling()
     }
 
     private func setUpButton() {
         let fileManager = FileManager.default
+        // Settings button
         settingsButton.setImage(fileManager.getImageInBundle(bundlePath: "Filter.png"), for: .normal)
         view.addSubview(settingsButton)
         settingsButton.contentHorizontalAlignment = .fill
@@ -75,7 +77,7 @@ class ProductListViewController: UIViewController {
         settingsButton.pinTop(to: searchBar.topAnchor)
         settingsButton.pinRight(to: view, 8)
         settingsButton.addTarget(self, action: #selector(goToSetting), for: .touchUpInside)
-        
+        // Sign-out button
         signOutButton.setImage(fileManager.getImageInBundle(bundlePath: "logout.png"), for: .normal)
         view.addSubview(signOutButton)
         signOutButton.contentHorizontalAlignment = .fill
@@ -85,7 +87,9 @@ class ProductListViewController: UIViewController {
         signOutButton.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 5)
         signOutButton.pinRight(to: view, 8)
         signOutButton.addTarget(self, action: #selector(signOut), for: .touchUpInside)
-        
+    }
+
+    private func setUpGreetings() {
         helloMessage.text = "Привет  👋"
         view.addSubview(helloMessage)
         helloMessage.font = UIFont.systemFont(ofSize: 18.00)

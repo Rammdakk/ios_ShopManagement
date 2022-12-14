@@ -6,7 +6,7 @@ import UIKit
 
 final class ProductListCell: UICollectionViewCell {
     static let reuseIdentifier = "ProductCell"
-    private let productImageView = UIImageView()
+    private let productImageView = WebImageView()
     private let productTitle = UILabel()
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
@@ -97,30 +97,31 @@ final class ProductListCell: UICollectionViewCell {
         } else {
             priceLabel.text = "$" + product.price
         }
-        if let url = product.imageURL {
-            setImage(from: url, product: product)
-        }
+        productImageView.set(imageURL: product.imageURL)
+//        if let url = product.imageURL {
+//            setImage(from: url, product: product)
+//        }
     }
 
-    func setImage(from url: URL, product: ProductViewModel) {
-        if let data = product.imageData {
-            DispatchQueue.main.async {
-                self.productImageView.image = UIImage(data: data)
-            }
-        } else {
-            DispatchQueue.global().async {
-                guard let imageData = try? Data(contentsOf: url) else {
-                    return
-                }
-                product.imageData = imageData
-                let image = UIImage(data: imageData)
-                DispatchQueue.main.async {
-                    self.productImageView.image = image
-                }
-            }
-        }
-
-    }
+//    func setImage(from url: URL, product: ProductViewModel) {
+//        if let data = product.imageData {
+//            DispatchQueue.main.async {
+//                self.productImageView.image = UIImage(data: data)
+//            }
+//        } else {
+//            DispatchQueue.global().async {
+//                guard let imageData = try? Data(contentsOf: url) else {
+//                    return
+//                }
+//                product.imageData = imageData
+//                let image = UIImage(data: imageData)
+//                DispatchQueue.main.async {
+//                    self.productImageView.image = image
+//                }
+//            }
+//        }
+//
+//    }
 
     override func prepareForReuse() {
         productImageView.image = nil

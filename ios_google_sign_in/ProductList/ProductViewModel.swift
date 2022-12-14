@@ -10,7 +10,6 @@ final class ProductViewModel {
     let invoiceLink: String
     let price: String
     let imageURL: URL?
-    var imageData: Data?
 
     init(title: String, checkLink: String,
          description: String = "", imageUrlPath: String?, price: String?) {
@@ -18,10 +17,11 @@ final class ProductViewModel {
         self.description = description
         invoiceLink = checkLink
         self.price = price ?? ""
-        if let imageURL = URL(string: imageUrlPath ?? "https://www.short.ink/zv8gTW8R0eu") {
+        if let imagePath = imageUrlPath,
+           let imageURL = URL(string: imagePath) {
             self.imageURL = imageURL
         } else {
-            imageURL = URL(string: "https://www.short.ink/zv8gTW8R0eu")
+            imageURL = nil
         }
     }
 }
