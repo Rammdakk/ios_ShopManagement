@@ -225,7 +225,7 @@ extension ProductListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
             -> UICollectionViewCell {
 
-        let viewModel = productsViewModels[indexPath.row]
+        let viewModel = filteredItems[indexPath.row]
         if let productCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier,
                 for: indexPath)
                 as? ProductListCell {
@@ -293,7 +293,20 @@ extension ProductListViewController: ProductListDisplayLogic {
             }
         }
         productsViewModels = viewModel
-        filteredItems = productsViewModels
+        guard let searchText = searchBar.text else {
+            filteredItems = productsViewModels
+            reloadData()
+            return
+        }
+        if searchText.isEmpty{
+            filteredItems = productsViewModels
+            reloadData()
+            return
+        }
+        filteredItems = productsViewModels.filter({ (data) -> Bool in
+            let tmp = data.title
+            return tmp.lowercased().contains(searchText.lowercased())
+        })
         reloadData()
     }
 
@@ -309,6 +322,5 @@ extension ProductListViewController: ProductListDisplayLogic {
                 view.sizeToFit()
             }
         }
-        print("error")
     }
 }
