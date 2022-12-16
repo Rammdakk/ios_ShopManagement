@@ -134,7 +134,7 @@ final class SettingsViewController: UIViewController {
     }
 
     private func setUpSendButton() {
-        sendButton.setTitle("Отправить", for: .normal)
+        sendButton.setTitle("Применить", for: .normal)
         sendButton.backgroundColor = .label
         sendButton.setTitleColor(.systemBackground, for: .normal)
         view.addSubview(sendButton)

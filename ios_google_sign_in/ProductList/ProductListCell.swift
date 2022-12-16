@@ -6,7 +6,7 @@ import UIKit
 
 final class ProductListCell: UICollectionViewCell {
     static let reuseIdentifier = "ProductCell"
-    private let productImageView = UIImageView()
+    private let productImageView = WebImageView()
     private let productTitle = UILabel()
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
@@ -59,7 +59,7 @@ final class ProductListCell: UICollectionViewCell {
         contentView.addSubview(productTitle)
         productTitle.translatesAutoresizingMaskIntoConstraints = false
         productTitle.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor).isActive = true
-        productTitle.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: -4).isActive = true
+        productTitle.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: -8).isActive = true
         productTitle.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -4).isActive = true
     }
 
@@ -70,7 +70,7 @@ final class ProductListCell: UICollectionViewCell {
         contentView.addSubview(descriptionLabel)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor).isActive = true
-        descriptionLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: -4).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: -8).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: priceLabel.topAnchor, constant:
         -4).isActive = true
     }
@@ -95,31 +95,9 @@ final class ProductListCell: UICollectionViewCell {
         if product.price.isEmpty {
             priceLabel.text = "Цена не указана"
         } else {
-            priceLabel.text = "$" + product.price
+            priceLabel.text = "₽" + product.price
         }
-        if let url = product.imageURL {
-            setImage(from: url, product: product)
-        }
-    }
-
-    func setImage(from url: URL, product: ProductViewModel) {
-        if let data = product.imageData {
-            DispatchQueue.main.async {
-                self.productImageView.image = UIImage(data: data)
-            }
-        } else {
-            DispatchQueue.global().async {
-                guard let imageData = try? Data(contentsOf: url) else {
-                    return
-                }
-                product.imageData = imageData
-                let image = UIImage(data: imageData)
-                DispatchQueue.main.async {
-                    self.productImageView.image = image
-                }
-            }
-        }
-
+        productImageView.set(imageURL: product.imageURL)
     }
 
     override func prepareForReuse() {

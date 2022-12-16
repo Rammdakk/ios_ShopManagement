@@ -12,7 +12,7 @@ final class ProductInfoViewController: UIViewController {
         scroll.contentSize = CGSize(width: self.view.frame.size.width, height: 2000)
         return scroll
     }()
-    private var imageView = UIImageView()
+    private var imageView = WebImageView()
     private var titleLabel = UILabel()
     private var descriptionLabel = UITextView()
     private var phoneNumberField = UITextView()
@@ -88,9 +88,10 @@ final class ProductInfoViewController: UIViewController {
                                    🧾Чек можно скачать тут: \(viewModel.invoiceLink)\nЖдем Вас снова!
                                    """
         }
-        if let data = viewModel.imageData {
-            imageView.image = UIImage(data: data)
-        }
+//        if let data = viewModel.imageData {
+//            imageView.image = UIImage(data: data)
+//        }
+        imageView.set(imageURL: viewModel.imageURL)
     }
 
 // MARK: - SetUp UI
@@ -189,7 +190,6 @@ final class ProductInfoViewController: UIViewController {
     @objc
     func sendMessage(sender: UIButton!) {
         if phoneNumberField.text.count < 5 {
-            // TODO: - Show warning
             return
         }
         let queryItems = [URLQueryItem(name: "text", value: messageTextView.text)]

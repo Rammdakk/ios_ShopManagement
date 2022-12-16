@@ -17,4 +17,3 @@ class SettingsAssembly {
         return viewController
     }
 }
-

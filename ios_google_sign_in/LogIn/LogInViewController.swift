@@ -25,7 +25,7 @@ class LogInViewController: UIViewController {
     private func googleSetUp() {
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.signIn(with: config, presenting: self, hint: "",
-                additionalScopes: [LogInViewController.sheetsReadScope]) { user, error in
+                additionalScopes: [LogInViewController.sheetsReadScope]) { _, error in
             if let error = error {
                 print(error)
                 return
@@ -46,10 +46,10 @@ class LogInViewController: UIViewController {
         signInButton.setImage(fileManager.getImageInBundle(bundlePath: "google.png"), for: .normal)
         signInButton.contentHorizontalAlignment = .fill
         signInButton.imageView?.contentMode = .scaleAspectFit
-        NSLayoutConstraint(item: signInButton.imageView,
-                           attribute:NSLayoutConstraint.Attribute.centerY, relatedBy:
-                            NSLayoutConstraint.Relation.equal, toItem: signInButton, attribute:
-                            NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: signInButton.imageView as Any,
+                           attribute: NSLayoutConstraint.Attribute.centerY,
+                           relatedBy: NSLayoutConstraint.Relation.equal, toItem: signInButton,
+                           attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0).isActive = true
 
         signInButton.imageView?.pinLeft(to: signInButton)
         signInButton.imageView?.pinHeight(to: signInButton.heightAnchor, 0.6)

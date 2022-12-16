@@ -60,11 +60,13 @@ class ProductListViewController: UIViewController {
         configureTableView()
         setUpSearch()
         setUpButton()
+        setUpGreetings()
         setUpErrorHandling()
     }
 
     private func setUpButton() {
         let fileManager = FileManager.default
+        // Settings button
         settingsButton.setImage(fileManager.getImageInBundle(bundlePath: "Filter.png"), for: .normal)
         view.addSubview(settingsButton)
         settingsButton.contentHorizontalAlignment = .fill
@@ -75,7 +77,7 @@ class ProductListViewController: UIViewController {
         settingsButton.pinTop(to: searchBar.topAnchor)
         settingsButton.pinRight(to: view, 8)
         settingsButton.addTarget(self, action: #selector(goToSetting), for: .touchUpInside)
-        
+        // Sign-out button
         signOutButton.setImage(fileManager.getImageInBundle(bundlePath: "logout.png"), for: .normal)
         view.addSubview(signOutButton)
         signOutButton.contentHorizontalAlignment = .fill
@@ -85,7 +87,9 @@ class ProductListViewController: UIViewController {
         signOutButton.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 5)
         signOutButton.pinRight(to: view, 8)
         signOutButton.addTarget(self, action: #selector(signOut), for: .touchUpInside)
-        
+    }
+
+    private func setUpGreetings() {
         helloMessage.text = "Привет  👋"
         view.addSubview(helloMessage)
         helloMessage.font = UIFont.systemFont(ofSize: 18.00)
@@ -221,7 +225,7 @@ extension ProductListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
             -> UICollectionViewCell {
 
-        let viewModel = productsViewModels[indexPath.row]
+        let viewModel = filteredItems[indexPath.row]
         if let productCell = tableView.dequeueReusableCell(withReuseIdentifier: ProductListCell.reuseIdentifier,
                 for: indexPath)
                 as? ProductListCell {
@@ -289,7 +293,20 @@ extension ProductListViewController: ProductListDisplayLogic {
             }
         }
         productsViewModels = viewModel
-        filteredItems = productsViewModels
+        guard let searchText = searchBar.text else {
+            filteredItems = productsViewModels
+            reloadData()
+            return
+        }
+        if searchText.isEmpty{
+            filteredItems = productsViewModels
+            reloadData()
+            return
+        }
+        filteredItems = productsViewModels.filter({ (data) -> Bool in
+            let tmp = data.title
+            return tmp.lowercased().contains(searchText.lowercased())
+        })
         reloadData()
     }
 
@@ -305,6 +322,5 @@ extension ProductListViewController: ProductListDisplayLogic {
                 view.sizeToFit()
             }
         }
-        print("error")
     }
 }

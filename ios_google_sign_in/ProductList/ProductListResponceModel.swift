@@ -25,6 +25,7 @@ enum ProductListResponceModel {
     }
 }
 
+/// The result of response.
 public enum Result<Success, Failure: Swift.Error> {
     /// A success, storing a `Success` value.
     case success(Success)
@@ -38,5 +39,4 @@ public enum Error: Swift.Error {
     case emptyData
     case noAccessToken
     case network(Swift.Error)
-    
 }
