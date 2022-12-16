@@ -291,23 +291,23 @@ extension ProductListViewController: ProductListDisplayLogic {
                     view.isHidden = true
                 })
             }
+            self?.productsViewModels = viewModel
+            guard let searchText = self?.searchBar.text else {
+                self?.filteredItems = self?.productsViewModels ?? []
+                self?.reloadData()
+                return
+            }
+            if searchText.isEmpty {
+                self?.filteredItems = self?.productsViewModels ?? []
+                self?.reloadData()
+                return
+            }
+            self?.filteredItems = self?.productsViewModels.filter({ (data) -> Bool in
+                let tmp = data.title
+                return tmp.lowercased().contains(searchText.lowercased())
+            }) ?? []
+            self?.reloadData()
         }
-        productsViewModels = viewModel
-        guard let searchText = searchBar.text else {
-            filteredItems = productsViewModels
-            reloadData()
-            return
-        }
-        if searchText.isEmpty{
-            filteredItems = productsViewModels
-            reloadData()
-            return
-        }
-        filteredItems = productsViewModels.filter({ (data) -> Bool in
-            let tmp = data.title
-            return tmp.lowercased().contains(searchText.lowercased())
-        })
-        reloadData()
     }
 
     func displayError(_ errorMessage: String) {
