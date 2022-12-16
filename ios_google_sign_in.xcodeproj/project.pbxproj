@@ -202,7 +202,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A8FE82292909BDF9004784A6 /* Build configuration list for PBXNativeTarget "ios_google_sign_in" */;
 			buildPhases = (
-				A8F0D4C0290FC82A00F300C2 /* ShellScript */,
 				A8FE82112909BDF8004784A6 /* Sources */,
 				A8FE82122909BDF8004784A6 /* Frameworks */,
 				A8FE82132909BDF8004784A6 /* Resources */,
@@ -271,26 +270,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A8F0D4C0290FC82A00F300C2 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"error: SwiftLint does not exist, download it from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A8FE82112909BDF8004784A6 /* Sources */ = {
