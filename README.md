@@ -8,6 +8,8 @@
 5. Описание
 <img width="971" alt="image" src="https://user-images.githubusercontent.com/68683848/208134826-e0f61713-3ec8-4f02-8efa-ebdc8cb388af.png">
 
+[Пример таблицы](https://docs.google.com/spreadsheets/d/1HvXfgK2VJBIvJEWVHD4jy4ClPLzfh_l-CUDX0AxiEnA/edit#gid=0)
+
 Для просмотра у Google аккаунта должен быть доступ к просмотру таблицы.
 
 Прилоржение разработано полностью на языке Swift.
@@ -18,3 +20,6 @@
 
 Взаимодействие с таблицей реализовано через [Google Sheets API](https://developers.google.com/sheets/api/)
 
+Отправка сообщений осуществлялась через [Whatsapp API](https://api.whatsapp.com)
+
+Чтобы уменьшить количество загружаемых данных, была реализовано кэширование изображенией через кастомную UIVIew.
